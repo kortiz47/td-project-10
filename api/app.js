@@ -34,7 +34,6 @@ const app = express();
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));
 
-
 app.use(cors());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
