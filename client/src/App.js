@@ -3,8 +3,10 @@ import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 //COMPONENTS
-import Courses from './components/Courses';
 import Header from './components/Header';
+import Courses from './components/Courses';
+import CreateCourse from './components/CreateCourse';
+
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -25,6 +27,12 @@ const App = () => {
       <Header />
       <Routes>
         <Route path='/' element={<Courses />} />
+        <Route path='/courses/create' element={<CreateCourse />}/>
+        <Route path='/courses/:id/update'/>
+        <Route path='/courses/:id'/>
+        <Route path='/signin'/>
+        <Route path='/signup'/>
+        <Route path='/signout'/>
       </Routes>
     </div>
   );
