@@ -1,5 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+
+//COMPONENTS
+import Courses from './components/Courses';
+import Header from './components/Header';
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -17,8 +22,10 @@ const App = () => {
 
   return (
     <div>
-      <h1>React Application</h1>
-      {data.map(item => <p>{item.title}</p>)}
+      <Header />
+      <Routes>
+        <Route path='/' element={<Courses />} />
+      </Routes>
     </div>
   );
 }

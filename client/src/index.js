@@ -1,16 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+
+//CONTEXT
+//TODO: import contexts to grab api data
+
+//APP
 import App from './App';
 
+//STYLING
 import './styles/global.css';
-import './styles/reset.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
+
+
+
+
+
+
+
+
+
 
 
 //import reportWebVitals from './reportWebVitals';
