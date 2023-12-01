@@ -9,14 +9,11 @@ const Courses = () => {
 
     useEffect(() => {
         axios.get('http://localhost:5000/api/courses')
-            .then(response => {
-                console.log(response.data)
-                setData(response.data)
-            })
+            .then(response => setData(response.data))
             .catch(error => {
                 console.log(error);
             });
-    }, [])
+    }, []);
 
     return (
         <main>
