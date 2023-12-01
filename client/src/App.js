@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CreateCourse from './components/CreateCourse';
+import UpdateCourse from './components/UpdateCourse';
 
 
 const App = () => {
@@ -28,7 +29,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Courses />} />
         <Route path='/courses/create' element={<CreateCourse />}/>
-        <Route path='/courses/:id/update'/>
+        <Route path='/courses/:id/update' element={<UpdateCourse />}/>
         <Route path='/courses/:id'/>
         <Route path='/signin'/>
         <Route path='/signup'/>
