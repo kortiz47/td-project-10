@@ -1,21 +1,25 @@
 import './App.css';
 import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 const App = () => {
-  const data = axios.get('http://localhost:5000/api/courses')
-    .then(function (response) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    });
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/courses')
+      .then(response => {
+        console.log(response.data)
+        setData(response.data)
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [])
 
   return (
     <div>
       <h1>React Application</h1>
-      <p>{data}</p>
+      {data.map(item => <p>{item.title}</p>)}
     </div>
   );
 }
