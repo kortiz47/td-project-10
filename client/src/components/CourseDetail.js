@@ -7,20 +7,27 @@ const CourseDetail = () => {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        const fetchData = async() =>{
+        const fetchData = async () => {
             await axios.get(`http://localhost:5000/api${pathname}`)
-            .then(response => {
-                setCourse(response.data)
-            })
-            .catch(error => {
-                console.log(error);
-            });
+                .then(response => {
+                    setCourse(response.data)
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
         fetchData();
     }, [pathname]);
-    
-   // debugger
-    
+
+    const materialsArray = () => {
+        if (course.materialsNeeded) {
+            const materials = course.materialsNeeded;
+            const list = materials.split('* ');
+            list.shift();
+            return list.map(material => <li>{material}</li>)
+        }
+    }
+    const materials = materialsArray();
 
     return (
         <main>
@@ -45,11 +52,11 @@ const CourseDetail = () => {
                         </div>
                         <div>
                             <h3 className="course--detail--title">Estimated Time</h3>
-                            <p>{course.estimatedTime}</p>
+                            <p>{course.estimatedTime ? course.estimatedTime : 'No Current Estimate'}</p>
 
                             <h3 className="course--detail--title">Materials Needed</h3>
                             <ul className="course--detail--list">
-                                <li>{course.materialsNeeded}</li>
+                                {materials ? materials : <li>None Required</li>}
                             </ul>
                         </div>
                     </div>
@@ -62,7 +69,5 @@ const CourseDetail = () => {
 export default CourseDetail;
 
 
-/** TODO: split the materialsNeeded string by the * in order to create a li of the materials in database
- * Current problem: .split is not defined when using it because it seems the api call first returns undefined/it has no data in it
- * so we have to find a way to trigger the function when the page renders at first and nothing is being passed
- */
+/** TODO */
+//Refactor the code for the materials array
