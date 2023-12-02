@@ -4,25 +4,23 @@ import axios from "axios";
 
 const CourseDetail = () => {
     const [course, setCourse] = useState([]);
-
     const { pathname } = useLocation();
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api${pathname}`)
+        const fetchData = async() =>{
+            await axios.get(`http://localhost:5000/api${pathname}`)
             .then(response => {
                 setCourse(response.data)
             })
             .catch(error => {
                 console.log(error);
             });
+        }
+        fetchData();
     }, [pathname]);
     
-
-    // useEffect(() => {
-    //     const materials = course.materialsNeeded;
-    //     const list = materials.split('* ');
-    //     console.log(list);
-    // })
+   // debugger
+    
 
     return (
         <main>
