@@ -1,3 +1,6 @@
+//Creates a POST request to /api/users api route - i.e. creates a new user with a full name, email, and password
+/**Still need to figure out how to link the post request of the form to api */
+
 import { Link } from 'react-router-dom';
 import { useRef } from 'react';
 
@@ -16,7 +19,7 @@ const UserSignUp = () =>{
             <div className="form--centered">
                 <h2>Sign Up</h2>
                 
-                <form>
+                <form method='POST' action='http://localhost:5000/api/users'>
                     <label htmlFor="firstName">First Name</label>
                     <input id="firstName" name="firstName" type="text" required ref={fname}/>
                     <label htmlFor="lastName">Last Name</label>
