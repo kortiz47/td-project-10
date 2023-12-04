@@ -22,19 +22,19 @@ const UpdateCourse = () => {
                     <div className="main--flex">
                         <div>
                             <label htmlFor="courseTitle">Course Title</label>
-                            <input id="courseTitle" name="courseTitle" type="text" defaultValue="Build a Basic Bookcase" />
+                            <input id="courseTitle" name="courseTitle" type="text" defaultValue={course.title} />
 
                             <p>By Joe Smith</p>
 
                             <label htmlFor="courseDescription">Course Description</label>
-                            <textarea id="courseDescription" name="courseDescription" defaultValue='course description'></textarea>
+                            <textarea id="courseDescription" name="courseDescription" defaultValue={course.description}></textarea>
                         </div>
                         <div>
                             <label htmlFor="estimatedTime">Estimated Time</label>
-                            <input id="estimatedTime" name="estimatedTime" type="text" defaultValue="14 hours" />
+                            <input id="estimatedTime" name="estimatedTime" type="text" defaultValue={course.estimatedTime} />
 
                             <label htmlFor="materialsNeeded">Materials Needed</label>
-                            <textarea id="materialsNeeded" name="materialsNeeded" defaultValue="materials"></textarea>
+                            <textarea id="materialsNeeded" name="materialsNeeded" defaultValue={course.materialsNeeded}></textarea>
                         </div>
                     </div>
 
