@@ -1,34 +1,27 @@
 import { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 const CourseDetail = () => {
     const [course, setCourse] = useState([]);
-    const { pathname } = useLocation();
+    const { id } = useParams();
 
     useEffect(() => {
-        const fetchData = async () => {
-            await axios.get(`http://localhost:5000/api${pathname}`)
-                .then(response => {
-                    setCourse(response.data)
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        }
-        fetchData();
-    }, [pathname]);
+        axios.get(`http://localhost:5000/api/courses/${id}`)
+            .then(response => setCourse(response.data))
+            .catch(error => console.log(error));
+    }, [id]);
 
     const materialsArray = () => {
         if (course.materialsNeeded) {
             const materials = course.materialsNeeded;
             const list = materials.split('* ');
             list.shift();
-            return list.map(material => <li>{material}</li>)
+            return list.map(material => <li key={Math.random()}>{material}</li>)
         }
     }
     const materials = materialsArray();
-
+    // if (course){
     return (
         <main>
             <div className="actions--bar">
@@ -65,9 +58,6 @@ const CourseDetail = () => {
         </main>
     )
 }
+//}
 
 export default CourseDetail;
-
-
-/** TODO */
-//Refactor the code for the materials array

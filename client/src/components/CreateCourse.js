@@ -1,6 +1,10 @@
-
+import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 const CreateCourse = () => {
+
+    const navigate = useNavigate();
+
     return (
 
         <main>
@@ -32,7 +36,8 @@ const CreateCourse = () => {
                             <textarea id="materialsNeeded" name="materialsNeeded"></textarea>
                         </div>
                     </div>
-                    <button className="button" type="submit">Create Course</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
+                    <button className="button" type="submit">Create Course</button>
+                    <button className="button button-secondary" onClick={()=>navigate('/')}>Cancel</button>
                 </form>
             </div>
         </main>

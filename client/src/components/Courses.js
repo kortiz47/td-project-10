@@ -10,15 +10,13 @@ const Courses = () => {
     useEffect(() => {
         axios.get('http://localhost:5000/api/courses')
             .then(response => setData(response.data))
-            .catch(error => {
-                console.log(error);
-            });
+            .catch(error => console.log(error));
     }, []);
 
     return (
         <main>
             <div className="wrap main--grid">
-                {data.map(book => <Course book={book} key={book.id} />)}
+                {data.map(course => <Course course={course} key={course.id} />)}
                 <NewCourse />
             </div>
         </main>
