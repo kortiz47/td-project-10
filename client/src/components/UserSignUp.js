@@ -2,32 +2,47 @@
 /**Still need to figure out how to link the post request of the form to api */
 
 import { Link, useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import axios from 'axios';
 
 const UserSignUp = () => {
+    const [errors, setErrors] = useState([]);
+
     const firstName = useRef(null);
     const lastName = useRef(null);
     const email = useRef(null);
     const password = useRef(null);
+
     const navigate = useNavigate();
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const data = {
+        const user = {
             firstName: firstName.current.value,
             lastName: lastName.current.value,
             emailAddress: email.current.value,
             password: password.current.value
         }
 
-        await axios.post('http://localhost:5000/api/users', data, {
+        await axios.post('http://localhost:5000/api/users', user, {
             headers:{
                 "Content-Type": "application/json; charset=utf-8"
             }})
-            .then(response => console.log(response))
-            .catch(error => console.log(error))
+            .then((response) => {
+                if(response.status === 201){
+                    console.log(`${user.firstName} ${user.lastName}'s account has been successfully created!`);
+                }
+            })
+            .catch(error => {
+                if(error.response.status === 400){
+                    const errors = error.response.data;
+                    setErrors(errors);
+                } else{
+                    console.log(error);
+                }
+            })
     }
 
     const handleCancel = (e) => {
@@ -67,3 +82,13 @@ const UserSignUp = () => {
 export default UserSignUp;
 
 //onclick="event.preventDefault(); location.href='index.html';"
+///////////////////////////
+        // const fetchOptions = {
+        //     method: "POST",
+        //     headers:{
+        //         "Content-Type": "application/json; charset=utf-8"
+        //     },
+        //     body: JSON.stringify(user)
+        // }
+        // const response = await fetch('http://localhost:5000/api/users', fetchOptions);
+        // console.log(response.json())
