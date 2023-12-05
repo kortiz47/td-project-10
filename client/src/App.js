@@ -9,9 +9,9 @@ import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 //Error Components
-import UnhandledError from './components/UnhandledError';
-import Forbidden from './components/Forbidden';
-import NotFound from './components/NotFound';
+import UnhandledError from './errors/UnhandledError';
+import NotFound from './errors/NotFound';
+import Forbidden from './errors/Forbidden';
 
 const App = () => {
   return (

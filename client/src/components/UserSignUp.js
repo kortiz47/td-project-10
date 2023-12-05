@@ -1,9 +1,7 @@
-//Creates a POST request to /api/users api route - i.e. creates a new user with a full name, email, and password
-/**Still need to figure out how to link the post request of the form to api */
-
 import { Link, useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import axios from 'axios';
+import UserErrors from '../errors/UserErrors';
 
 const UserSignUp = () => {
     const [errors, setErrors] = useState([]);
@@ -15,7 +13,6 @@ const UserSignUp = () => {
 
     const navigate = useNavigate();
     
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -38,6 +35,7 @@ const UserSignUp = () => {
             .catch(error => {
                 if(error.response.status === 400){
                     const errors = error.response.data;
+                    console.log(errors);
                     setErrors(errors);
                 } else{
                     console.log(error);
@@ -54,6 +52,8 @@ const UserSignUp = () => {
         <main>
             <div className="form--centered">
                 <h2>Sign Up</h2>
+
+                <UserErrors errors={errors} />
 
                 <form onSubmit={handleSubmit}>
                     
