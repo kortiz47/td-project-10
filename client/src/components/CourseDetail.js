@@ -20,6 +20,16 @@ const CourseDetail = () => {
             return list.map(material => <li key={Math.random()}>{material}</li>)
         }
     }
+
+    const handleDelete = (e) =>{
+        e.preventDefault();
+        console.log(id);
+        axios.delete(`http://localhost:5000/api/courses/${id}`)
+            .then(response => {console.log(response); console.log(`${id} deleted`)})
+            .catch(error => console.log(error))
+    }
+
+
     const materials = materialsArray();
     // if (course){
     return (
@@ -27,7 +37,7 @@ const CourseDetail = () => {
             <div className="actions--bar">
                 <div className="wrap">
                     <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
-                    <Link className="button" to="#">Delete Course</Link>
+                    <Link className="button" onClick={handleDelete}>Delete Course</Link>
                     <Link className="button button-secondary" to="/">Return to List</Link>
                 </div>
             </div>
