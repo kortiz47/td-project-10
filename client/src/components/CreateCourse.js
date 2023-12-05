@@ -1,8 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
-import axios from "axios";
-import ValidationErrors from "../errors/CourseErrors";
-import CourseErrors from "../errors/CourseErrors";
 
 const CreateCourse = () => {
     const [errors, setErrors] = useState([]);

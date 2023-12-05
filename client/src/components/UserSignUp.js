@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
-import axios from 'axios';
+import axios from '../api/axios';
 import UserErrors from '../errors/UserErrors';
 
 const UserSignUp = () => {
@@ -12,7 +12,7 @@ const UserSignUp = () => {
     const password = useRef(null);
 
     const navigate = useNavigate();
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -23,24 +23,30 @@ const UserSignUp = () => {
             password: password.current.value
         }
 
-        await axios.post('http://localhost:5000/api/users', user, {
-            headers:{
-                "Content-Type": "application/json; charset=utf-8"
-            }})
-            .then((response) => {
-                if(response.status === 201){
-                    console.log(`${user.firstName} ${user.lastName}'s account has been successfully created!`);
+        try {
+            await axios.post('/users', user, {
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
                 }
             })
-            .catch(error => {
-                if(error.response.status === 400){
-                    const errors = error.response.data;
-                    console.log(errors);
-                    setErrors(errors);
-                } else{
-                    console.log(error);
-                }
-            })
+                .then((response) => {
+                    if (response.status === 201) {
+                        console.log(`${user.firstName} ${user.lastName}'s account has been successfully created!`);
+                    }
+                })
+                .catch(error => {
+                    if (error.response.status === 400) {
+                        const errors = error.response.data;
+                        console.log(errors);
+                        setErrors(errors);
+                    } else {
+                        throw new Error();
+                    }
+                })
+        } catch (error) {
+            console.log(error);
+            navigate('/error');
+        }
     }
 
     const handleCancel = (e) => {
@@ -56,7 +62,7 @@ const UserSignUp = () => {
                 <UserErrors errors={errors} />
 
                 <form onSubmit={handleSubmit}>
-                    
+
                     <label htmlFor="firstName">First Name</label>
                     <input id="firstName" name="firstName" type="text" required ref={firstName} />
 
@@ -83,12 +89,12 @@ export default UserSignUp;
 
 //onclick="event.preventDefault(); location.href='index.html';"
 ///////////////////////////
-        // const fetchOptions = {
-        //     method: "POST",
-        //     headers:{
-        //         "Content-Type": "application/json; charset=utf-8"
-        //     },
-        //     body: JSON.stringify(user)
-        // }
-        // const response = await fetch('http://localhost:5000/api/users', fetchOptions);
-        // console.log(response.json())
+// const fetchOptions = {
+//     method: "POST",
+//     headers:{
+//         "Content-Type": "application/json; charset=utf-8"
+//     },
+//     body: JSON.stringify(user)
+// }
+// const response = await fetch('http://localhost:5000/api/users', fetchOptions);
+// console.log(response.json())

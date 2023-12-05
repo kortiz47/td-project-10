@@ -8,6 +8,7 @@ import UpdateCourse from './components/UpdateCourse';
 import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
+
 //Error Components
 import UnhandledError from './errors/UnhandledError';
 import NotFound from './errors/NotFound';

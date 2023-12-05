@@ -1,37 +1,26 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios";
+import ReactMarkdown from 'react-markdown';
+import axios from "../api/axios";
 
 const CourseDetail = () => {
     const [course, setCourse] = useState([]);
     const { id } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/courses/${id}`)
+        axios.get(`/courses/${id}`)
             .then(response => setCourse(response.data))
             .catch(error => console.log(error));
     }, [id]);
 
-    const materialsArray = () => {
-        if (course.materialsNeeded) {
-            const materials = course.materialsNeeded;
-            const list = materials.split('* ');
-            list.shift();
-            return list.map(material => <li key={Math.random()}>{material}</li>)
-        }
-    }
-
-    const handleDelete = (e) =>{
+    const handleDelete = (e) => {
         e.preventDefault();
         console.log(id);
-        axios.delete(`http://localhost:5000/api/courses/${id}`)
-            .then(response => {console.log(response); console.log(`${id} deleted`)})
+        axios.delete(`/courses/${id}`)
+            .then(response => { console.log(response); console.log(`${id} deleted`) })
             .catch(error => console.log(error))
     }
 
-
-    const materials = materialsArray();
-    // if (course){
     return (
         <main>
             <div className="actions--bar">
@@ -51,16 +40,16 @@ const CourseDetail = () => {
                             <h4 className="course--name">{course.title}</h4>
                             <p>By Joe Smith</p>
 
-                            <p>{course.description}</p>
+                            <ReactMarkdown>{course.description}</ReactMarkdown>
                         </div>
                         <div>
                             <h3 className="course--detail--title">Estimated Time</h3>
                             <p>{course.estimatedTime ? course.estimatedTime : 'No Current Estimate'}</p>
 
                             <h3 className="course--detail--title">Materials Needed</h3>
-                            <ul className="course--detail--list">
-                                {materials ? materials : <li>None Required</li>}
-                            </ul>
+                            <ReactMarkdown className="course--detail--list">
+                                {course.materialsNeeded}
+                            </ReactMarkdown>
                         </div>
                     </div>
                 </form>
@@ -68,6 +57,5 @@ const CourseDetail = () => {
         </main>
     )
 }
-//}
 
 export default CourseDetail;

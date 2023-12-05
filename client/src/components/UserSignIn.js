@@ -1,32 +1,46 @@
-//performs a GET request to check if the user email and password is in the data base in order to sign in someone
-/** Still need to figure out how to authenticate the user */
-
 import { Link, useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState, useContext } from "react";
+import axios from "../api/axios";
+import UserContext from "../context/UserContext";
 
 const UserSignIn = () => {
-    const userPassword = useRef();
-    const userEmail = useRef();
+    const { actions } = useContext(UserContext);
+    const [errors, setErrors] = useState([]);
+
+    const userPassword = useRef(null);
+    const userEmail = useRef(null);
+
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("password: " + userPassword.current.value);
-        console.log("email: " + userEmail.current.value);
+        await axios.get('/users', {
+            auth:{
+                username: userEmail.current.value,
+                password: userPassword.current.value
+            }})
+    
+    }
+
+    const handleCancel = (e) =>{
+        e.preventDefault();
+        navigate('/');
     }
 
     return (
         <main>
             <div className="form--centered">
                 <h2>Sign In</h2>
-                <form method="GET" action="http://localhost:5000/api/users">
+                <form onSubmit={handleSubmit}>
+
                     <label htmlFor="emailAddress">Email Address</label>
-                    <input id="emailAddress" name="emailAddress" type="email" required ref={userEmail} onChange={handleSubmit} />
+                    <input id="emailAddress" name="emailAddress" type="email" required ref={userEmail} />
+
                     <label htmlFor="password">Password</label>
                     <input id="password" name="password" type="password" required ref={userPassword} />
 
-                    <button className="button" type="submit" onClick={handleSubmit}>Sign In</button>
-                    <button className="button button-secondary" onClick={(e) => {e.preventDefault(); navigate('/')}}>Cancel</button>
+                    <button className="button" type="submit">Sign In</button>
+                    <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
                 
                 </form>
                 <p>Don't have a user account? Click here to <Link to="/signup">sign up</Link>!</p>

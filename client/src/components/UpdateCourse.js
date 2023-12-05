@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 
 
 const UpdateCourse = () => {
@@ -13,7 +13,7 @@ const UpdateCourse = () => {
     const materialsNeeded = useRef();
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/courses/${id}`)
+        axios.get(`/courses/${id}`)
             .then(response => setCourse(response.data))
             .catch(error => console.log(error));
     }, [id]);
