@@ -27,7 +27,7 @@ const CourseDetail = () => {
     const handleDelete = async (e) => {
         e.preventDefault();
         console.log(course)
-
+        console.log(userCredentials)
         const response = await api(`/courses/${id}`, "DELETE", course, userCredentials)
         console.log(response)
     }

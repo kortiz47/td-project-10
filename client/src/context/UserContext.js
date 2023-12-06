@@ -27,6 +27,7 @@ export const UserProvider = (props) => {
 
     const signOut = () => {
         setAuthUser(null);
+        setUserCredentials(null);
     }
 
     return (
