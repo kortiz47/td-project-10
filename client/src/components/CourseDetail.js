@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import ReactMarkdown from 'react-markdown'
 import { api } from "../utils/apiHelper";
+import UserContext from "../context/UserContext";
 
 const CourseDetail = () => {
     const [course, setCourse] = useState([]);
+    const { userCredentials } = useContext(UserContext);
     const { id } = useParams();
 
     useEffect(() => {
@@ -22,9 +24,12 @@ const CourseDetail = () => {
         fetchData();
     }, [id]);
 
-    const handleDelete = (e) => {
+    const handleDelete = async (e) => {
         e.preventDefault();
-        console.log(`course with id:${id} needs to be deleted with this handle function`)
+        console.log(course)
+
+        const response = await api(`/courses/${id}`, "DELETE", course, userCredentials)
+        console.log(response)
     }
 
     return (
@@ -44,7 +49,7 @@ const CourseDetail = () => {
                         <div>
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{course.title}</h4>
-                            {console.log(course.User.firstName)}
+                            {/* {console.log(course.User["firstName"])} */}
                             {/* TODO: get the firstName and lastName of the user into the created by section */}
                             <p>By Joe Smith</p>
 

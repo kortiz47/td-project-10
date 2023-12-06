@@ -17,6 +17,7 @@ const CreateCourse = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        
         const course = {
             title: title.current.value,
             description: description.current.value,
@@ -29,6 +30,12 @@ const CreateCourse = () => {
             .then(response => response.json())
             .then(response => console.log(response))
             .catch(error => console.log(error));
+        
+        if(response.status === 200) {
+            console.log('course created!')
+        } else {
+            console.log(response.status)
+        }
         
     }
 
