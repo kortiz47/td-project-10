@@ -8,11 +8,16 @@ const CourseDetail = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        const fetchData = async() =>{
+        const fetchData = async () => {
             const response = await api(`/courses/${id}`, "GET", null, null)
-                .then(response => response.json())
-                .catch(error => console.log(error));
-            setCourse(response);
+            try {
+                if (response.status === 200){
+                    const courses = await response.json();
+                    setCourse(courses);
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
         fetchData();
     }, [id]);

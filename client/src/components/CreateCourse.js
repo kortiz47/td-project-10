@@ -16,17 +16,17 @@ const CreateCourse = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        const user = {
+        const course = {
             title: title.current.value,
             description: description.current.value,
             estimatedTime: estimatedTime.current.value,
             materialsNeeded: materialsNeeded.current.value
         }
 
-        const response = await api('/courses', "POST", user, null)
-            .then(response => response.json())
-            .catch(error => console.log(error));
-        console.log(response);
+        // const response = await api('/courses', "POST", course, null)
+        //     .then(response => response.json())
+        //     .catch(error => console.log(error));
+        // console.log(response);
     }
 
     const handleCancel = (e) =>{

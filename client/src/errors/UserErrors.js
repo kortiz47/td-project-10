@@ -10,7 +10,7 @@ const UserErrors = ({ errors }) => {
                 </ul>
             </div>
         )
-    }
+    } 
 
     return errorDisplay;
 }

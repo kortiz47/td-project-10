@@ -7,11 +7,16 @@ const Courses = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        const fetchData = async() =>{
+        const fetchData = async () => {
             const response = await api('/courses', "GET", null, null)
-                .then(response => response.json())
-                .catch(error => console.log(error));
-        setData(response);
+            try {
+                if (response.status === 200){
+                    const courses = await response.json();
+                    setData(courses);
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
         fetchData();
     }, []);

@@ -13,9 +13,16 @@ const UpdateCourse = () => {
     const materialsNeeded = useRef();
 
     useEffect(() => {
-        const fetchData = async() =>{
-            const response = await api(`/courses/${id}`, "GET", null, null);
-            console.log(response);
+        const fetchData = async () => {
+            const response = await api(`/courses/${id}`, "GET", null, null)
+            try {
+                if (response.status === 200){
+                    const courses = await response.json();
+                    setCourse(courses);
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
         fetchData();
     }, [id]);
