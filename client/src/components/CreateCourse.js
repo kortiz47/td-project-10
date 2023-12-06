@@ -4,10 +4,11 @@ import UserContext from "../context/UserContext";
 import { api } from "../utils/apiHelper";
 
 const CreateCourse = () => {
-    const { authUser } = useContext(UserContext);
+    const { authUser, userCredentials } = useContext(UserContext);
+    console.log(authUser)
     const navigate = useNavigate();
 
-    const [errors, setErrors] = useState([]);
+    //const [errors, setErrors] = useState([]);
 
     const title = useRef();
     const description = useRef();
@@ -20,13 +21,14 @@ const CreateCourse = () => {
             title: title.current.value,
             description: description.current.value,
             estimatedTime: estimatedTime.current.value,
-            materialsNeeded: materialsNeeded.current.value
+            materialsNeeded: materialsNeeded.current.value,
+            userId: authUser.id
         }
 
-        // const response = await api('/courses', "POST", course, null)
-        //     .then(response => response.json())
-        //     .catch(error => console.log(error));
-        // console.log(response);
+        const response = await api('/courses', "POST", course, userCredentials)
+            .then(response => response.json())
+            .catch(error => console.log(error));
+        console.log(response);
     }
 
     const handleCancel = (e) =>{

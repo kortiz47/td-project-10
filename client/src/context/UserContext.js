@@ -6,8 +6,10 @@ const UserContext = createContext(null);
 
 export const UserProvider = (props) => {
     const [authUser, setAuthUser] = useState(null);
+    const [userCredentials, setUserCredentials] = useState(null);
 
     const signIn = async (credentials) => {
+        setUserCredentials(credentials);
         const response = await api("/users", "GET", null, credentials);
         if (response.status === 200) {
             const user = await response.json();
@@ -30,6 +32,7 @@ export const UserProvider = (props) => {
     return (
         <UserContext.Provider value={{
             authUser,
+            userCredentials,
             actions: {
                 signIn,
                 signOut
