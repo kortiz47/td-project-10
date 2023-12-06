@@ -1,7 +1,7 @@
 const UserErrors = ({ errors }) => {
     let errorDisplay = null;
 
-    if (errors.length > 0) {
+    // if (errors.length > 0) {
         errorDisplay = (
             <div className="validation--errors">
                 <h3>Validation Errors</h3>
@@ -10,7 +10,7 @@ const UserErrors = ({ errors }) => {
                 </ul>
             </div>
         )
-    }
+    // }
 
     return errorDisplay;
 }

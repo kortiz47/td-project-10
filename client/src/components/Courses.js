@@ -1,16 +1,19 @@
 import Course from "./Course";
 import NewCourse from "./NewCourse";
-
 import { useState, useEffect } from "react";
-import axios from "../api/axios";
+import { api } from "../utils/apiHelper";
 
 const Courses = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get('/courses')
-            .then(response => setData(response.data))
-            .catch(error => console.log(error));
+        const fetchData = async() =>{
+            const response = await api('/courses', "GET", null, null)
+                .then(response => response.json())
+                .catch(error => console.log(error));
+        setData(response);
+        }
+        fetchData();
     }, []);
 
     return (

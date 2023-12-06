@@ -15,7 +15,7 @@ const Header = () => {
                             <li><Link to="/signin">Sign In</Link></li>
                         </ul>
                         :
-                        <ul class="header--signedin">
+                        <ul className="header--signedin">
                             <li>Welcome, {authUser.firstName}!</li>
                             <li><Link to='/signout'>Sign Out</Link></li>
                         </ul>

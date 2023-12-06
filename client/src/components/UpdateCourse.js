@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import axios from "../api/axios";
+import { api } from "../utils/apiHelper";
 
 
 const UpdateCourse = () => {
@@ -13,9 +13,11 @@ const UpdateCourse = () => {
     const materialsNeeded = useRef();
 
     useEffect(() => {
-        axios.get(`/courses/${id}`)
-            .then(response => setCourse(response.data))
-            .catch(error => console.log(error));
+        const fetchData = async() =>{
+            const response = await api(`/courses/${id}`, "GET", null, null);
+            console.log(response);
+        }
+        fetchData();
     }, [id]);
 
     const handleSubmit = (e) =>{

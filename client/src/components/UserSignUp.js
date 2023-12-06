@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
-import axios from '../api/axios';
 import UserErrors from '../errors/UserErrors';
+import { api } from '../utils/apiHelper';
 
 const UserSignUp = () => {
     const [errors, setErrors] = useState([]);
@@ -24,25 +24,16 @@ const UserSignUp = () => {
         }
 
         try {
-            await axios.post('/users', user, {
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8"
-                }
-            })
-                .then((response) => {
-                    if (response.status === 201) {
-                        console.log(`${user.firstName} ${user.lastName}'s account has been successfully created!`);
-                    }
-                })
-                .catch(error => {
-                    if (error.response.status === 400) {
-                        const errors = error.response.data;
-                        console.log(errors);
-                        setErrors(errors);
-                    } else {
-                        throw new Error();
-                    }
-                })
+            const response = await api('/users', "POST", user);
+
+            if(response.status === 201){
+                console.log(`${user.firstName} ${user.lastName}'s account has been successfully created!`)
+            } else if (response.status === 400){
+                const data = await response.json();
+                setErrors(data);
+            } else {
+                throw new Error();
+            }
         } catch (error) {
             console.log(error);
             navigate('/error');
@@ -86,15 +77,3 @@ const UserSignUp = () => {
 }
 
 export default UserSignUp;
-
-//onclick="event.preventDefault(); location.href='index.html';"
-///////////////////////////
-// const fetchOptions = {
-//     method: "POST",
-//     headers:{
-//         "Content-Type": "application/json; charset=utf-8"
-//     },
-//     body: JSON.stringify(user)
-// }
-// const response = await fetch('http://localhost:5000/api/users', fetchOptions);
-// console.log(response.json())

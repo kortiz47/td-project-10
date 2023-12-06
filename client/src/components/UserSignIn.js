@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState, useContext } from "react";
-import axios from "../api/axios";
 import UserContext from "../context/UserContext";
 
 const UserSignIn = () => {
@@ -14,18 +13,21 @@ const UserSignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        //debugger
+        const credentials = {
+            username: userEmail.current.value,
+            password: userPassword.current.value
+        }
 
-        const username = userEmail.current.value;
-        const password = userPassword.current.value;
-
-        try {
-            await actions.signIn(username, password);
-        } catch (error) {
-            console.log('ERROR from UserSignIn ' + error)
+        try{
+            await actions.signIn(credentials);
+        }catch(error){
+            console.log(error);
+            console.log('ERROR from UserSignIn '+ error)
         }
     }
 
-    const handleCancel = (e) => {
+    const handleCancel = (e) =>{
         e.preventDefault();
         navigate('/');
     }
@@ -44,7 +46,7 @@ const UserSignIn = () => {
 
                     <button className="button" type="submit">Sign In</button>
                     <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
-
+                
                 </form>
                 <p>Don't have a user account? Click here to <Link to="/signup">sign up</Link>!</p>
             </div>

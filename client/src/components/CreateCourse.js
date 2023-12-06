@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
-
+import { useRef, useState, useContext } from "react";
+import UserContext from "../context/UserContext";
+import { api } from "../utils/apiHelper";
 
 const CreateCourse = () => {
+    const { authUser } = useContext(UserContext);
+    const navigate = useNavigate();
+
     const [errors, setErrors] = useState([]);
 
     const title = useRef();
@@ -10,30 +14,19 @@ const CreateCourse = () => {
     const estimatedTime = useRef();
     const materialsNeeded = useRef();
 
-    const navigate = useNavigate();
-
-
-
-    // const [course, setCourse] = useState[{
-    //     title: '',
-    //     description: '',
-    //     estimatedTime: '',
-    //     materialsNeeded: ''
-    // }]
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-    //     //when the form is submitted we want to make a post request to the /api/courses route to add a course
-        console.log(title.current.value, description.current.value, estimatedTime.current.value, materialsNeeded.current.value)
-    //     axios.post('http://localhost:5000/api/courses', {
-    //         title: title.current.value,
-    //         description: description.current.value,
-    //         estimatedTime: estimatedTime.current.value,
-    //         materialsNeeded: materialsNeeded.current.value
-    //     })
-    //         .then(response => console.log(response))
-    //         .catch(err => console.log('Error: ' + err))
-        //navigate('/');
+        const user = {
+            title: title.current.value,
+            description: description.current.value,
+            estimatedTime: estimatedTime.current.value,
+            materialsNeeded: materialsNeeded.current.value
+        }
+
+        const response = await api('/courses', "POST", user, null)
+            .then(response => response.json())
+            .catch(error => console.log(error));
+        console.log(response);
     }
 
     const handleCancel = (e) =>{

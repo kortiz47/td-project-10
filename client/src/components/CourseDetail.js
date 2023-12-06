@@ -1,24 +1,25 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import ReactMarkdown from 'react-markdown'
-import axios from "../api/axios";
+import { api } from "../utils/apiHelper";
 
 const CourseDetail = () => {
     const [course, setCourse] = useState([]);
     const { id } = useParams();
 
     useEffect(() => {
-        axios.get(`/courses/${id}`)
-            .then(response => setCourse(response.data))
-            .catch(error => console.log(error));
+        const fetchData = async() =>{
+            const response = await api(`/courses/${id}`, "GET", null, null)
+                .then(response => response.json())
+                .catch(error => console.log(error));
+            setCourse(response);
+        }
+        fetchData();
     }, [id]);
 
     const handleDelete = (e) => {
         e.preventDefault();
-        console.log(id);
-        axios.delete(`/courses/${id}`)
-            .then(response => { console.log(response); console.log(`${id} deleted`) })
-            .catch(error => console.log(error))
+        console.log(`course with id:${id} needs to be deleted with this handle function`)
     }
 
     return (
