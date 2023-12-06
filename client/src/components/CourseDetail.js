@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown'
 import axios from "../api/axios";
 
 const CourseDetail = () => {
