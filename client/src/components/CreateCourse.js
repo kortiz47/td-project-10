@@ -27,8 +27,9 @@ const CreateCourse = () => {
 
         const response = await api('/courses', "POST", course, userCredentials)
             .then(response => response.json())
+            .then(response => console.log(response))
             .catch(error => console.log(error));
-        console.log(response);
+        
     }
 
     const handleCancel = (e) =>{
@@ -49,7 +50,7 @@ const CreateCourse = () => {
                             <label htmlFor="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" ref={title} />
 
-                            <p>By Joe Smith</p>
+                            <p>By {authUser.firstName} {authUser.lastName}</p>
 
                             <label htmlFor="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" ref={description}></textarea>

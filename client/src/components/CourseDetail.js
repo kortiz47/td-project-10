@@ -44,6 +44,8 @@ const CourseDetail = () => {
                         <div>
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{course.title}</h4>
+                            {console.log(course.User.firstName)}
+                            {/* TODO: get the firstName and lastName of the user into the created by section */}
                             <p>By Joe Smith</p>
 
                             <ReactMarkdown>{course.description}</ReactMarkdown>
