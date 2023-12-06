@@ -16,7 +16,8 @@ export const UserProvider = (props) => {
         .then(response => {
             if(response.status === 200){
                 console.log(`Login Successful! ${username} was logged in successfully`)
-                setAuthUser(response.config.auth);
+                setAuthUser(response.data[0]);
+                //setAuthUser(response.config.auth);
             } else if (response.status === 401){
                 console.log("Auth was not successful " + response)
             } 

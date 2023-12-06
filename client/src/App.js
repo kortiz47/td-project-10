@@ -8,6 +8,7 @@ import UpdateCourse from './components/UpdateCourse';
 import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
+import UserSignOut from './components/UserSignOut';
 
 //Error Components
 import UnhandledError from './errors/UnhandledError';
@@ -25,7 +26,7 @@ const App = () => {
         <Route path='/courses/:id' element={<CourseDetail />} />
         <Route path='/signin' element={<UserSignIn />} />
         <Route path='/signup' element={<UserSignUp />} />
-        <Route path='/signout' />
+        <Route path='/signout' element={<UserSignOut />}/>
         <Route path='/notfound' element={<NotFound />} />
         <Route path='/forbidden' element={<Forbidden />} />
         <Route path='/error' element={<UnhandledError />} />
