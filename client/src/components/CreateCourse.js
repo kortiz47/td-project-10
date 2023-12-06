@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 
+
 const CreateCourse = () => {
     const [errors, setErrors] = useState([]);
 
@@ -35,6 +36,11 @@ const CreateCourse = () => {
         //navigate('/');
     }
 
+    const handleCancel = (e) =>{
+        e.preventDefault(); 
+        navigate('/');
+    }
+
     return (
         <main>
             <div className="wrap">
@@ -62,7 +68,7 @@ const CreateCourse = () => {
                         </div>
                     </div>
                     <button className="button" type="submit">Create Course</button>
-                    <button className="button button-secondary" onClick={(e) => { e.preventDefault(); navigate('/') }}>Cancel</button>
+                    <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
                 </form>
             </div>
         </main>
