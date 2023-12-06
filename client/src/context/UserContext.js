@@ -9,11 +9,10 @@ export const UserProvider = (props) => {
 
     const signIn = async (credentials) => {
         const response = await api("/users", "GET", null, credentials);
-        console.log(response)
         if (response.status === 200) {
             const user = await response.json();
             console.log(`${user[0].emailAddress} has been successfully logged in!`);
-            setAuthUser(user);
+            setAuthUser(user[0]);
             //Cookies.set("authenticatedUser", JSON.stringify(user), { expires: 1 });
             //return user;
         } else if (response.status === 401) {
