@@ -15,13 +15,10 @@ export const api = (path, method = "GET", body = null, credentials = null) => {
     if (credentials) {
         const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
         options.headers.Authorization = `Basic ${encodedCredentials}`;
-        //options.headers.Authorization = `Basic ${credentials}`
     }
 
     return fetch(url, options);
 }
 
-//fetch requests are formatted: method, headers, and body if its a post/put/delete
-// in order to fetch its fetch(url, options)
 
 
