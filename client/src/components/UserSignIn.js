@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRef, useState, useContext } from "react";
 import UserContext from "../context/UserContext";
+import UserErrors from "../errors/UserErrors";
 
 const UserSignIn = () => {
     const { actions } = useContext(UserContext);
@@ -10,15 +11,15 @@ const UserSignIn = () => {
     const userEmail = useRef(null);
 
     const navigate = useNavigate();
-    const location = useLocation();
+    //const location = useLocation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let from = '/';
-        
-        if(location.state){
-            from = location.state.from
-        }
+        // let from = '/';
+
+        // if(location.state){
+        //     from = location.state.from
+        // }
 
 
         const credentials = {
@@ -26,21 +27,21 @@ const UserSignIn = () => {
             password: userPassword.current.value
         }
 
-        try{
+        try {
             const user = await actions.signIn(credentials);
-            if(user){
-                navigate(from);
-            }else {
+            if (user) {
+            //navigate(from);
+            navigate('/')
+            } else {
                 setErrors(['Sign-in was unsuccessful'])
             }
-            
-        }catch(error){
+        } catch (error) {
             console.log(error);
-            console.log('ERROR from UserSignIn '+ error)
+            navigate('/error');
         }
     }
 
-    const handleCancel = (e) =>{
+    const handleCancel = (e) => {
         e.preventDefault();
         navigate('/');
     }
@@ -49,6 +50,9 @@ const UserSignIn = () => {
         <main>
             <div className="form--centered">
                 <h2>Sign In</h2>
+
+                <UserErrors errors={errors} />
+
                 <form onSubmit={handleSubmit}>
 
                     <label htmlFor="emailAddress">Email Address</label>
@@ -59,7 +63,7 @@ const UserSignIn = () => {
 
                     <button className="button" type="submit">Sign In</button>
                     <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
-                
+
                 </form>
                 <p>Don't have a user account? Click here to <Link to="/signup">sign up</Link>!</p>
             </div>
@@ -68,10 +72,3 @@ const UserSignIn = () => {
 }
 
 export default UserSignIn;
-
-
-/** TODO */
-
-//Need to make sure a user can log into the form and be able to submit it/create a post request to the api
-
-//Also need to fix the link a user is directed to after logging into the app

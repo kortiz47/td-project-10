@@ -9,7 +9,7 @@ import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
-import PrivateRoute from './components/PrivateRoute';
+//import PrivateRoute from './components/PrivateRoute';
 
 //Error Components
 import UnhandledError from './errors/UnhandledError';

@@ -76,11 +76,11 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
         },
     });
     
-    if(users){
+    // if(users){
         res.json(users);
-    } else{
-        res.status(404).end();
-    }
+    // } else{
+    //     res.status(404).end();
+    // }
     
 }));
 
