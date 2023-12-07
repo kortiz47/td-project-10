@@ -23,9 +23,11 @@ const CourseDetail = () => {
                     throw new Error();
                 }
             } catch (error) {
-                console.log(error)
+                console.log(error);
+                navigate('/error', { replace: true });
             }
         }
+
         fetchData();
     }, [id, navigate]);
 

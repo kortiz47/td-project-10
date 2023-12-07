@@ -23,6 +23,7 @@ const Courses = () => {
                 navigate('/error', { replace: true });
             }
         }
+        
         fetchData();
     }, [navigate]);
 
