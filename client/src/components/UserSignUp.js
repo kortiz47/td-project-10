@@ -33,14 +33,28 @@ const UserSignUp = () => {
         try {
             const response = await api('/users', "POST", user);
 
-            if(response.status === 201){
+            if (response.status === 201) {
                 console.log(`${user.firstName} ${user.lastName}'s account has been successfully created!`);
-                debugger
                 actions.signIn(credentials);
                 navigate('/');
-            } else if (response.status === 400){
-                const data = await response.json();
-                setErrors(data);
+            } else if (response.status === 400) {
+                const valErrors = [];
+                let data = await response.json();
+                console.log(data);
+                if (data[0]) {
+                    valErrors.push (data[0]);
+                    console.log(valErrors);
+                }
+                if (data.errors) {
+                    valErrors.push(...data.errors);
+                    console.log(valErrors);
+                }
+                if (!password.current.value) {
+                    valErrors.push("Please provide a value for 'password'");
+                    console.log(valErrors);
+                }
+                console.log(valErrors);
+                setErrors(valErrors);
             } else {
                 throw new Error();
             }
@@ -65,16 +79,16 @@ const UserSignUp = () => {
                 <form onSubmit={handleSubmit}>
 
                     <label htmlFor="firstName">First Name</label>
-                    <input id="firstName" name="firstName" type="text" required ref={firstName} />
+                    <input id="firstName" name="firstName" type="text" ref={firstName} />
 
                     <label htmlFor="lastName">Last Name</label>
-                    <input id="lastName" name="lastName" type="text" required ref={lastName} />
+                    <input id="lastName" name="lastName" type="text" ref={lastName} />
 
                     <label htmlFor="emailAddress">Email Address</label>
-                    <input id="emailAddress" name="emailAddress" type="email" required ref={email} />
+                    <input id="emailAddress" name="emailAddress" type="email" ref={email} />
 
                     <label htmlFor="password">Password</label>
-                    <input id="password" name="password" type="password" required ref={password} />
+                    <input id="password" name="password" type="password" ref={password} />
 
                     <button className="button" type="submit" onSubmit={handleSubmit}>Sign Up</button>
                     <button className="button button-secondary" onClick={handleCancel}>Cancel</button>

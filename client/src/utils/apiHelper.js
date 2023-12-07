@@ -17,7 +17,6 @@ export const api = (path, method = "GET", body = null, credentials = null) => {
         options.headers.Authorization = `Basic ${encodedCredentials}`;
     }
 
-    debugger
     const fetchData = fetch(url, options)
         // .then(response => response)
         // .catch(error => {

@@ -6,7 +6,6 @@ import { useContext } from "react";
 //authUser[0] but for just regular logging in it is just authUser
 const Header = () => {
     const { authUser } = useContext(UserContext);
-    console.log(authUser)
     return (
         <header>
             <div className="wrap header--flex">
