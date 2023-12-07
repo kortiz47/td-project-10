@@ -6,6 +6,7 @@ import UserContext from "../context/UserContext";
 
 const CourseDetail = () => {
     const [course, setCourse] = useState(null);
+    const [user, setUser] = useState(null);
     const { userCredentials } = useContext(UserContext);
     const { id } = useParams();
     const navigate = useNavigate();
@@ -15,8 +16,9 @@ const CourseDetail = () => {
             try {
                 const response = await api(`/courses/${id}`, "GET", null, null);
                 if (response.status === 200) {
-                    const courses = await response.json();
-                    setCourse(courses);
+                    const course = await response.json();
+                    setCourse(course);
+                    setUser(course.User);
                 } else if(response.status === 404) {
                     navigate('/notfound');
                 } else {
@@ -33,10 +35,18 @@ const CourseDetail = () => {
 
     const handleDelete = async (e) => {
         e.preventDefault();
-        console.log(course)
-        console.log(userCredentials)
-        const response = await api(`/courses/${id}`, "DELETE", course, userCredentials)
-        console.log(response)
+        const response = await api(`/courses/${id}`, "DELETE", course, userCredentials);
+
+        if(response.status === 204){
+            console.log('Course has been deleted!');
+            navigate('/');
+        } else if (response.status === 401){
+            console.log('Unauthorized: Please login in order to delete a course');
+            navigate('/signin');
+        } else if (response.status === 403){
+            console.log('you are not the creator of this course so you cannot delete it');
+            navigate('/forbidden');
+        } 
     }
 
     if (course) {
@@ -57,9 +67,9 @@ const CourseDetail = () => {
                             <div>
                                 <h3 className="course--detail--title">Course</h3>
                                 <h4 className="course--name">{course.title}</h4>
-                                {/* {console.log(course.User["firstName"])} */}
                                 {/* TODO: get the firstName and lastName of the user into the created by section */}
-                                <p>By Joe Smith</p>
+                                
+                                <p>By {user.firstName} {user.lastName}</p>
 
                                 <ReactMarkdown>{course.description}</ReactMarkdown>
                             </div>
