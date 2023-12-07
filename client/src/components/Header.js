@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import { useContext } from "react";
 
+//TODO - when we refresh the auth user is stored in an object in array which then makes auth user 
+//authUser[0] but for just regular logging in it is just authUser
 const Header = () => {
     const { authUser } = useContext(UserContext);
+    console.log(authUser)
     return (
         <header>
             <div className="wrap header--flex">

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRef, useState, useContext } from "react";
 import UserContext from "../context/UserContext";
 
@@ -10,18 +10,30 @@ const UserSignIn = () => {
     const userEmail = useRef(null);
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //debugger
+        let from = '/';
+        
+        if(location.state){
+            from = location.state.from
+        }
+
+
         const credentials = {
             username: userEmail.current.value,
             password: userPassword.current.value
         }
 
         try{
-            await actions.signIn(credentials);
-            navigate('/');
+            const user = await actions.signIn(credentials);
+            if(user){
+                navigate(from);
+            }else {
+                setErrors(['Sign-in was unsuccessful'])
+            }
+            
         }catch(error){
             console.log(error);
             console.log('ERROR from UserSignIn '+ error)

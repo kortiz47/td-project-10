@@ -6,20 +6,26 @@ import Cookies from 'js-cookie';
 const UserContext = createContext(null);
 
 export const UserProvider = (props) => {
-    //const cookie = Cookies.get()
+    const authCookie = Cookies.get("authenticatedUser");
+    const credentialsCookie = Cookies.get("userCredentials");
 
-    const [authUser, setAuthUser] = useState(null);
-    const [userCredentials, setUserCredentials] = useState(null);
+    const [authUser, setAuthUser] = useState(authCookie ? JSON.parse(authCookie) : null);
+    const [userCredentials, setUserCredentials] = useState(credentialsCookie ? JSON.parse(credentialsCookie) : null);
 
     const signIn = async (credentials) => {
+
         setUserCredentials(credentials);
         Cookies.set("userCredentials", JSON.stringify(credentials), { expires: 1 })
+
         const response = await api("/users", "GET", null, credentials);
+
         if (response.status === 200) {
             const user = await response.json();
             console.log(`${user[0].emailAddress} has been successfully logged in!`);
+
             setAuthUser(user[0]);
             Cookies.set("authenticatedUser", JSON.stringify(user), { expires: 1 });
+
             return user;
         } else if (response.status === 401) {
             console.log('Check that you entered your username and password correctly!');
@@ -32,6 +38,9 @@ export const UserProvider = (props) => {
     const signOut = () => {
         setAuthUser(null);
         setUserCredentials(null);
+
+        Cookies.remove("authenticatedUser");
+        Cookies.remove("userCredentials");
     }
 
     return (
