@@ -138,7 +138,12 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
             exclude: ['createdAt', 'updatedAt']
         }
     });
-    res.json(course);
+    if (course) {
+        res.json(course);
+    } else {
+        res.status(500).end();
+    }
+
 }))
 
 

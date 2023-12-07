@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ReactMarkdown from 'react-markdown'
 import { api } from "../utils/apiHelper";
 import UserContext from "../context/UserContext";
@@ -8,23 +8,26 @@ const CourseDetail = () => {
     const [course, setCourse] = useState(null);
     const { userCredentials } = useContext(UserContext);
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await api(`/courses/${id}`, "GET", null, null)
             try {
+                const response = await api(`/courses/${id}`, "GET", null, null);
                 if (response.status === 200) {
                     const courses = await response.json();
                     setCourse(courses);
+                } else if(response.status === 500) {
+                    navigate('/notfound');
                 } else {
-                    console.log(response)
+                    throw new Error();
                 }
             } catch (error) {
                 console.log(error)
             }
         }
         fetchData();
-    }, [id]);
+    }, [id, navigate]);
 
     const handleDelete = async (e) => {
         e.preventDefault();

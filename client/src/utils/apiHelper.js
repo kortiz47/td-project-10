@@ -1,5 +1,3 @@
-import { Navigate } from "react-router-dom";
-
 export const api = (path, method = "GET", body = null, credentials = null) => {
     
     const url = `http://localhost:5000/api${path}`;
@@ -19,6 +17,11 @@ export const api = (path, method = "GET", body = null, credentials = null) => {
         options.headers.Authorization = `Basic ${encodedCredentials}`;
     }
 
+    // try{
+    //     return fetch(url, options)
+    // }catch(error){
+    //     throw error;
+    // }
     const fetchData = fetch(url, options)
         .then(response => response)
         .catch(error => {
