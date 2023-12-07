@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useRef, useState } from 'react';
-import UserErrors from '../errors/UserErrors';
+import ValidationErrors from '../errors/ValidationErrors';
 import { api } from '../utils/apiHelper';
 import UserContext from '../context/UserContext';
 
@@ -60,7 +60,7 @@ const UserSignUp = () => {
             <div className="form--centered">
                 <h2>Sign Up</h2>
 
-                <UserErrors errors={errors} />
+                <ValidationErrors errors={errors} />
 
                 <form onSubmit={handleSubmit}>
 

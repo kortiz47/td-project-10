@@ -49,7 +49,7 @@ const authenticateUser = async (req, res, next) => {
                 message = `Authentication failure for username: ${user.emailAddress}`;
             }
         } else {
-            message = `User not found for username: ${user.emailAddress}`;
+            message = `User not found for username: ${credentials.name}`;
         }
     } else {
         message = 'Auth header not found';
@@ -76,11 +76,11 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
         },
     });
     
-    // if(users){
+    if(users){
         res.json(users);
-    // } else{
-    //     res.status(404).end();
-    // }
+    } else{
+        res.status(404).end();
+    }
     
 }));
 

@@ -18,9 +18,9 @@ export const UserProvider = (props) => {
 
         setUserCredentials(credentials);
         // Cookies.set("userCredentials", JSON.stringify(credentials), { expires: 1 })
-
+        //debugger
         const response = await api("/users", "GET", null, credentials);
-
+        console.log(response)
         if (response.status === 200) {
             const user = await response.json();
             console.log(`${user[0].emailAddress} has been successfully logged in!`);
@@ -29,12 +29,10 @@ export const UserProvider = (props) => {
             // Cookies.set("authenticatedUser", JSON.stringify(user), { expires: 1 });
 
             return user;
-        } else if (response.status === 401) {
+        } else if(response.status === 401) {
             console.log('Check that you entered your username and password correctly!');
             return null;
-        } else {
-            throw new Error();
-        }
+        } 
     }
 
     const signOut = () => {

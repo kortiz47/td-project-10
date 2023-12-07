@@ -1,4 +1,4 @@
-const UserErrors = ({ errors }) => {
+const ValidationErrors = ({ errors }) => {
     let errorDisplay = null;
 
     if (errors.length > 0) {
@@ -15,4 +15,4 @@ const UserErrors = ({ errors }) => {
     return errorDisplay;
 }
 
-export default UserErrors;
+export default ValidationErrors;

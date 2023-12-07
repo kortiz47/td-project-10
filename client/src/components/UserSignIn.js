@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRef, useState, useContext } from "react";
 import UserContext from "../context/UserContext";
-import UserErrors from "../errors/UserErrors";
+import ValidationErrors from "../errors/ValidationErrors";
 
 const UserSignIn = () => {
     const { actions } = useContext(UserContext);
@@ -51,7 +51,7 @@ const UserSignIn = () => {
             <div className="form--centered">
                 <h2>Sign In</h2>
 
-                <UserErrors errors={errors} />
+                <ValidationErrors errors={errors} />
 
                 <form onSubmit={handleSubmit}>
 

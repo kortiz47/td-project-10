@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useContext } from "react";
 import UserContext from "../context/UserContext";
+import ValidationErrors from "../errors/ValidationErrors";
 import { api } from "../utils/apiHelper";
 
 const CreateCourse = () => {
@@ -8,7 +9,7 @@ const CreateCourse = () => {
     console.log(authUser)
     const navigate = useNavigate();
 
-    //const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState([]);
 
     const title = useRef();
     const description = useRef();
@@ -23,20 +24,20 @@ const CreateCourse = () => {
             description: description.current.value,
             estimatedTime: estimatedTime.current.value,
             materialsNeeded: materialsNeeded.current.value,
-            userId: authUser.id
+            userId: (authUser ? authUser.id : null)
         }
 
-        const response = await api('/courses', "POST", course, userCredentials)
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(error => console.log(error));
-        
-        if(response.status === 200) {
-            console.log('course created!')
-        } else {
-            console.log(response.status)
+        try{
+            const response = await api('/courses', "POST", course, userCredentials)
+            if(response.status === 200) {
+                console.log('Course has been created!');
+                navigate('/');
+            } else if(response.status === 401) {
+                setErrors(['ACCESS DENIED: Must Sign In Before Making A Course'])
+            }
+        } catch(error){
+            console.log(error)
         }
-        
     }
 
     const handleCancel = (e) =>{
@@ -49,7 +50,7 @@ const CreateCourse = () => {
             <div className="wrap">
                 <h2>Create Course</h2>
 
-                {/* <CourseErrors errors={errors}/> */}
+                <ValidationErrors errors={errors}/>
 
                 <form onSubmit={handleSubmit}>
                     <div className="main--flex">
