@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 import { useState, useEffect, useRef, useContext } from "react";
 import UserContext from "../context/UserContext";
 import { api } from "../utils/apiHelper";
@@ -83,6 +83,7 @@ const UpdateCourse = () => {
         navigate('/');
     }
 
+    if(authUser.id === user.id){ 
     return (
         <main>
             <div className="wrap">
@@ -116,6 +117,9 @@ const UpdateCourse = () => {
             </div>
         </main>
     )
+    } else{
+        return <Navigate to="/forbidden" replace/>
+    }
 }
 
 export default UpdateCourse;

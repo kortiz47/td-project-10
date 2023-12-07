@@ -11,15 +11,15 @@ const UserSignIn = () => {
     const userEmail = useRef(null);
 
     const navigate = useNavigate();
-    //const location = useLocation();
+    const location = useLocation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // let from = '/';
+        let from = '/';
 
-        // if(location.state){
-        //     from = location.state.from
-        // }
+        if(location.state){
+            from = location.state.from
+        }
 
 
         const credentials = {
@@ -30,8 +30,8 @@ const UserSignIn = () => {
         try {
             const user = await actions.signIn(credentials);
             if (user) {
-            //navigate(from);
-            navigate('/')
+            navigate(from);
+            //navigate('/')
             } else {
                 setErrors(['Sign-in was unsuccessful', 'Check your Email and Password'])
             }
