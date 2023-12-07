@@ -21,6 +21,7 @@ const UserSignIn = () => {
 
         try{
             await actions.signIn(credentials);
+            navigate('/');
         }catch(error){
             console.log(error);
             console.log('ERROR from UserSignIn '+ error)
