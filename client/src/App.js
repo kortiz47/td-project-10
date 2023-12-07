@@ -34,6 +34,7 @@ const App = () => {
         <Route path='/notfound' element={<NotFound />} />
         <Route path='/forbidden' element={<Forbidden />} />
         <Route path='/error' element={<UnhandledError />} />
+        <Route path='*' element={<NotFound />}/>
       </Routes>
     </div>
   );

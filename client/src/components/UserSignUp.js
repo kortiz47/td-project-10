@@ -79,16 +79,16 @@ const UserSignUp = () => {
                 <form onSubmit={handleSubmit}>
 
                     <label htmlFor="firstName">First Name</label>
-                    <input id="firstName" name="firstName" type="text" ref={firstName} />
+                    <input id="firstName" name="firstName" type="text" required ref={firstName} />
 
                     <label htmlFor="lastName">Last Name</label>
-                    <input id="lastName" name="lastName" type="text" ref={lastName} />
+                    <input id="lastName" name="lastName" type="text" required ref={lastName} />
 
                     <label htmlFor="emailAddress">Email Address</label>
-                    <input id="emailAddress" name="emailAddress" type="email" ref={email} />
+                    <input id="emailAddress" name="emailAddress" type="email" required ref={email} />
 
                     <label htmlFor="password">Password</label>
-                    <input id="password" name="password" type="password" ref={password} />
+                    <input id="password" name="password" type="password" required ref={password} />
 
                     <button className="button" type="submit" onSubmit={handleSubmit}>Sign Up</button>
                     <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
