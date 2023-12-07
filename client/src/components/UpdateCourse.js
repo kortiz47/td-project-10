@@ -1,12 +1,16 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import UserContext from "../context/UserContext";
 import { api } from "../utils/apiHelper";
+import ValidationErrors from "../errors/ValidationErrors";
 
 
 const UpdateCourse = () => {
+    const { authUser, userCredentials } = useContext(UserContext);
     const navigate = useNavigate();
     const [course, setCourse] = useState([]);
     const [user, setUser] = useState([]);
+    const [errors, setErrors] = useState([]);
     const { id } = useParams();
     const title = useRef();
     const description = useRef();
@@ -37,29 +41,41 @@ const UpdateCourse = () => {
         fetchData();
     }, [id, navigate]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(title.current.value, description.current.value, estimatedTime.current.value, materialsNeeded.current.value)
 
-        //Handle submit errors
+        const course = {
+            title: title.current.value,
+            description: description.current.value,
+            estimatedTime: estimatedTime.current.value,
+            materialsNeeded: materialsNeeded.current.value,
+            userId: (authUser ? authUser.id : null)
+        }
 
-        // else if (response.status === 400){
-        //     const errs = [];
-        //     if (!title.current.value) {
-        //         errs.push('Please provide a Title')
-        //     }
-        //     if (!description.current.value) {
-        //         errs.push('Please provide a Description')
-        //     }
-        // } else if (response.status === 404){
-        //     console.log('The course you are looking for was not found');
-        //     navigate('/notfound');
-        // } else if (response.status === 403){
-        //     console.log('403 Forbidden');
-        //     navigate('/forbidden');
-        // } else if(response.status === 401){
-        //     console.log('401 unauthorized')
-        // }
+        try {
+            const response = await api(`/courses/${id}`, "PUT", course, userCredentials);
+            if (response.status === 204) {
+                console.log('Course was successfully updated!');
+                navigate('/');
+            } else if (response.status === 401) {
+                console.log('Unauthorized: Log in before updating course');
+                navigate('/signin');
+            } else if (response.status === 400) {
+                const errs = [];
+                if (!title.current.value) {
+                    errs.push('Please provide a Title')
+                }
+                if (!description.current.value) {
+                    errs.push('Please provide a Description')
+                }
+                setErrors(errs);
+            } else if (response.status === 403){
+                console.log('You are not the owner of this course, so you are unable to update it');
+                navigate('/forbidden');
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const handleCancel = (e) => {
@@ -71,6 +87,9 @@ const UpdateCourse = () => {
         <main>
             <div className="wrap">
                 <h2>Update Course</h2>
+
+                <ValidationErrors errors={errors}/>
+
                 <form onSubmit={handleSubmit}>
                     <div className="main--flex">
                         <div>

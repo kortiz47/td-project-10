@@ -6,7 +6,6 @@ import { api } from "../utils/apiHelper";
 
 const CreateCourse = () => {
     const { authUser, userCredentials } = useContext(UserContext);
-    console.log(authUser)
     const navigate = useNavigate();
 
     const [errors, setErrors] = useState([]);
@@ -57,38 +56,40 @@ const CreateCourse = () => {
         navigate('/');
     }
 
-    return (
-        <main>
-            <div className="wrap">
-                <h2>Create Course</h2>
+    //if (authUser) {
+        return (
+            <main>
+                <div className="wrap">
+                    <h2>Create Course</h2>
 
-                <ValidationErrors errors={errors} />
+                    <ValidationErrors errors={errors} />
 
-                <form onSubmit={handleSubmit}>
-                    <div className="main--flex">
-                        <div>
-                            <label htmlFor="courseTitle">Course Title</label>
-                            <input id="courseTitle" name="courseTitle" type="text" ref={title} />
+                    <form onSubmit={handleSubmit}>
+                        <div className="main--flex">
+                            <div>
+                                <label htmlFor="courseTitle">Course Title</label>
+                                <input id="courseTitle" name="courseTitle" type="text" ref={title} />
 
-                            <p>By {authUser.firstName} {authUser.lastName}</p>
+                                {/* <p>By {authUser.firstName} {authUser.lastName}</p> */}
 
-                            <label htmlFor="courseDescription">Course Description</label>
-                            <textarea id="courseDescription" name="courseDescription" ref={description}></textarea>
+                                <label htmlFor="courseDescription">Course Description</label>
+                                <textarea id="courseDescription" name="courseDescription" ref={description}></textarea>
+                            </div>
+                            <div>
+                                <label htmlFor="estimatedTime">Estimated Time</label>
+                                <input id="estimatedTime" name="estimatedTime" type="text" ref={estimatedTime} />
+
+                                <label htmlFor="materialsNeeded">Materials Needed</label>
+                                <textarea id="materialsNeeded" name="materialsNeeded" ref={materialsNeeded}></textarea>
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="estimatedTime">Estimated Time</label>
-                            <input id="estimatedTime" name="estimatedTime" type="text" ref={estimatedTime} />
-
-                            <label htmlFor="materialsNeeded">Materials Needed</label>
-                            <textarea id="materialsNeeded" name="materialsNeeded" ref={materialsNeeded}></textarea>
-                        </div>
-                    </div>
-                    <button className="button" type="submit">Create Course</button>
-                    <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
-                </form>
-            </div>
-        </main>
-    );
+                        <button className="button" type="submit">Create Course</button>
+                        <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+                    </form>
+                </div>
+            </main>
+        );
+   // }
 }
 
 export default CreateCourse;
