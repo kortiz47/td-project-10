@@ -1,3 +1,5 @@
+import { Navigate } from "react-router-dom";
+
 export const api = (path, method = "GET", body = null, credentials = null) => {
     
     const url = `http://localhost:5000/api${path}`;
@@ -17,7 +19,13 @@ export const api = (path, method = "GET", body = null, credentials = null) => {
         options.headers.Authorization = `Basic ${encodedCredentials}`;
     }
 
-    return fetch(url, options);
+    const fetchData = fetch(url, options)
+        .then(response => response)
+        .catch(error => {
+            console.log('Sorry! There was an error connecting to the server');
+            console.log(error);
+        });
+    return fetchData;
 }
 
 
