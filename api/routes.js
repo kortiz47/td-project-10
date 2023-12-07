@@ -1,10 +1,5 @@
 'use strict';
 
-//Changes made to routes after U9 - conditional for GET users - was originally just:
-/**
- * res.json(users);
- */
-
 //conditional for GET /courses/:id -- was originally just:
 /**
  * res.json(course);

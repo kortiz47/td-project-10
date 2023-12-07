@@ -12,10 +12,13 @@ const Courses = () => {
         const fetchData = async () => {
             try {
                 const response = await api('/courses', "GET", null, null)
-                if (response.status === 200) {
-                    const courses = await response.json();
-                    setData(courses);
-                } else {
+                if (response) {
+                    if (response.status === 200) {
+                        const courses = await response.json();
+                        setData(courses);
+                    }
+                }
+                else {
                     throw new Error();
                 }
             } catch (error) {
@@ -23,7 +26,7 @@ const Courses = () => {
                 navigate('/error', { replace: true });
             }
         }
-        
+
         fetchData();
     }, [navigate]);
 

@@ -16,9 +16,9 @@ const CreateCourse = () => {
     const estimatedTime = useRef();
     const materialsNeeded = useRef();
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         const course = {
             title: title.current.value,
             description: description.current.value,
@@ -27,21 +27,32 @@ const CreateCourse = () => {
             userId: (authUser ? authUser.id : null)
         }
 
-        try{
+        try {
             const response = await api('/courses', "POST", course, userCredentials)
-            if(response.status === 200) {
+            if (response.status === 201) {
                 console.log('Course has been created!');
                 navigate('/');
-            } else if(response.status === 401) {
-                setErrors(['ACCESS DENIED: Must Sign In Before Making A Course'])
+            } else if (response.status === 400) {
+                const errs = [];
+                if (!title.current.value) {
+                    errs.push('Please provide a Title')
+                }
+                if (!description.current.value) {
+                    errs.push('Please provide a Description')
+                }
+                setErrors(errs);
+            } else if (response.status === 401) {
+                setErrors(['ACCESS DENIED: Must Sign In Before Creating A Course'])
+            } else {
+                throw new Error();
             }
-        } catch(error){
+        } catch (error) {
             console.log(error)
         }
     }
 
-    const handleCancel = (e) =>{
-        e.preventDefault(); 
+    const handleCancel = (e) => {
+        e.preventDefault();
         navigate('/');
     }
 
@@ -50,7 +61,7 @@ const CreateCourse = () => {
             <div className="wrap">
                 <h2>Create Course</h2>
 
-                <ValidationErrors errors={errors}/>
+                <ValidationErrors errors={errors} />
 
                 <form onSubmit={handleSubmit}>
                     <div className="main--flex">

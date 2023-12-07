@@ -20,12 +20,12 @@ export const UserProvider = (props) => {
         // Cookies.set("userCredentials", JSON.stringify(credentials), { expires: 1 })
         //debugger
         const response = await api("/users", "GET", null, credentials);
-        console.log(response)
         if (response.status === 200) {
-            const user = await response.json();
-            console.log(`${user[0].emailAddress} has been successfully logged in!`);
+            let user = await response.json();
+            user = user[0];
+            console.log(`${user.emailAddress} has been successfully logged in!`);
 
-            setAuthUser(user[0]);
+            setAuthUser(user);
             // Cookies.set("authenticatedUser", JSON.stringify(user), { expires: 1 });
 
             return user;

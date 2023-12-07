@@ -33,7 +33,7 @@ const UserSignIn = () => {
             //navigate(from);
             navigate('/')
             } else {
-                setErrors(['Sign-in was unsuccessful'])
+                setErrors(['Sign-in was unsuccessful', 'Check your Email and Password'])
             }
         } catch (error) {
             console.log(error);
