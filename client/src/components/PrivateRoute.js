@@ -8,9 +8,9 @@ const PrivateRoute = () =>{
     console.log(authUser)
     
     if(authUser){
-        return <Outlet />
+        return (<Outlet />)
     } else{
-        return <Navigate to='/signin'/>
+        return (<Navigate to='/signin'/>)
     }
 }
 

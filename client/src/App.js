@@ -22,16 +22,14 @@ const App = () => {
       <Header />
       <Routes>
         <Route path='/' element={<Courses />} />
-
-        <Route element={<PrivateRoute />}/>
+        <Route element={<PrivateRoute />}>
           <Route path='/courses/create' element={<CreateCourse />} />
           <Route path='/courses/:id/update' element={<UpdateCourse />} />
-        <Route element={<PrivateRoute />}/>
-        
+        </Route>
         <Route path='/courses/:id' element={<CourseDetail />} />
         <Route path='/signin' element={<UserSignIn />} />
         <Route path='/signup' element={<UserSignUp />} />
-        <Route path='/signout' element={<UserSignOut />}/>
+        <Route path='/signout' element={<UserSignOut />} />
 
         <Route path='/notfound' element={<NotFound />} />
         <Route path='/forbidden' element={<Forbidden />} />
