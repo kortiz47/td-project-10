@@ -17,7 +17,7 @@ const CourseDetail = () => {
                 if (response.status === 200) {
                     const courses = await response.json();
                     setCourse(courses);
-                } else if(response.status === 500) {
+                } else if(response.status === 404) {
                     navigate('/notfound');
                 } else {
                     throw new Error();

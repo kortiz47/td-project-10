@@ -17,17 +17,13 @@ export const api = (path, method = "GET", body = null, credentials = null) => {
         options.headers.Authorization = `Basic ${encodedCredentials}`;
     }
 
-    // try{
-    //     return fetch(url, options)
-    // }catch(error){
-    //     throw error;
-    // }
     const fetchData = fetch(url, options)
         .then(response => response)
         .catch(error => {
             console.log('Sorry! There was an error connecting to the server');
             console.log(error);
         });
+        
     return fetchData;
 }
 

@@ -1,5 +1,16 @@
 'use strict';
 
+//Changes made to routes after U9 - conditional for GET users - was originally just:
+/**
+ * res.json(users);
+ */
+
+//conditional for GET /courses/:id -- was originally just:
+/**
+ * res.json(course);
+ */
+
+
 const express = require('express');
 const router = express.Router();
 
@@ -64,7 +75,13 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
             exclude: ['password', 'createdAt', 'updatedAt'],
         },
     });
-    res.json(users);
+    
+    if(users){
+        res.json(users);
+    } else{
+        res.status(404).end();
+    }
+    
 }));
 
 
@@ -138,10 +155,11 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
             exclude: ['createdAt', 'updatedAt']
         }
     });
+
     if (course) {
         res.json(course);
     } else {
-        res.status(500).end();
+        res.status(404).end();
     }
 
 }))
