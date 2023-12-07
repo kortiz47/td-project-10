@@ -1,9 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import UserErrors from '../errors/UserErrors';
 import { api } from '../utils/apiHelper';
+import UserContext from '../context/UserContext';
 
 const UserSignUp = () => {
+    const { actions } = useContext(UserContext);
     const [errors, setErrors] = useState([]);
 
     const firstName = useRef(null);
@@ -23,11 +25,19 @@ const UserSignUp = () => {
             password: password.current.value
         }
 
+        const credentials = {
+            username: email.current.value,
+            password: password.current.value
+        }
+
         try {
             const response = await api('/users', "POST", user);
 
             if(response.status === 201){
-                console.log(`${user.firstName} ${user.lastName}'s account has been successfully created!`)
+                console.log(`${user.firstName} ${user.lastName}'s account has been successfully created!`);
+                debugger
+                actions.signIn(credentials);
+                navigate('/');
             } else if (response.status === 400){
                 const data = await response.json();
                 setErrors(data);
