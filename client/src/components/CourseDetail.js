@@ -7,7 +7,7 @@ import UserContext from "../context/UserContext";
 const CourseDetail = () => {
     const [course, setCourse] = useState(null);
     const [user, setUser] = useState(null);
-    const { userCredentials } = useContext(UserContext);
+    const { authUser, userCredentials } = useContext(UserContext);
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const CourseDetail = () => {
                     const course = await response.json();
                     setCourse(course);
                     setUser(course.User);
-                } else if(response.status === 404) {
+                } else if (response.status === 404) {
                     navigate('/notfound');
                 } else {
                     throw new Error();
@@ -37,16 +37,16 @@ const CourseDetail = () => {
         e.preventDefault();
         const response = await api(`/courses/${id}`, "DELETE", course, userCredentials);
 
-        if(response.status === 204){
+        if (response.status === 204) {
             console.log('Course has been deleted!');
             navigate('/');
-        } else if (response.status === 401){
+        } else if (response.status === 401) {
             console.log('Unauthorized: Please login in order to delete a course');
             navigate('/signin');
-        } else if (response.status === 403){
+        } else if (response.status === 403) {
             console.log('you are not the creator of this course so you cannot delete it');
             navigate('/forbidden');
-        } 
+        }
     }
 
     if (course) {
@@ -54,8 +54,20 @@ const CourseDetail = () => {
             <main>
                 <div className="actions--bar">
                     <div className="wrap">
-                        <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
-                        <Link className="button" onClick={handleDelete}>Delete Course</Link>
+                        {authUser ?
+                            <>
+                                {authUser.id === user.id ?
+                                    <>
+                                        <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
+                                        <Link className="button" onClick={handleDelete}>Delete Course</Link>
+                                    </>
+                                    :
+                                    <></>
+                                }
+                            </>
+                            :
+                            null
+                        }
                         <Link className="button button-secondary" to="/">Return to List</Link>
                     </div>
                 </div>
@@ -68,7 +80,7 @@ const CourseDetail = () => {
                                 <h3 className="course--detail--title">Course</h3>
                                 <h4 className="course--name">{course.title}</h4>
                                 {/* TODO: get the firstName and lastName of the user into the created by section */}
-                                
+
                                 <p>By {user.firstName} {user.lastName}</p>
 
                                 <ReactMarkdown>{course.description}</ReactMarkdown>
