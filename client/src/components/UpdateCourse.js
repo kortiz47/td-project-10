@@ -15,7 +15,7 @@ const UpdateCourse = () => {
     const { authUser, userCredentials } = useContext(UserContext);
     const navigate = useNavigate();
     const [course, setCourse] = useState([]);
-    const [userId, setUserId] = useState([]);
+    //const [user, setUser] = useState([]);
     const [errors, setErrors] = useState([]);
     const { id } = useParams();
     const title = useRef();
@@ -23,20 +23,22 @@ const UpdateCourse = () => {
     const estimatedTime = useRef();
     const materialsNeeded = useRef();
 
+    //debugger
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api(`/courses/${id}`, "GET", null, null)
-                if (response.status === 200) {
-                    const data = await response.json();
-                    setCourse(data);
-                    setUserId(data.User.id);
-                } else if (response.status === 404) {
-                    console.log('Course was not found');
-                    navigate('/notfound')
-                } else {
-                    console.log(response.status);
-                    throw new Error();
+                const response = await api(`/courses/${id}`, "GET", null, null);
+                if (response) {
+                    if (response.status === 200) {
+                        const course = await response.json();
+                        setCourse(course)
+                    } else if (response.status === 404) {
+                        console.log('Course was not found');
+                        navigate('/notfound')
+                    } else {
+                        console.log(response.status);
+                        throw new Error();
+                    }
                 }
             } catch (error) {
                 console.log(error);
@@ -45,11 +47,12 @@ const UpdateCourse = () => {
         }
 
         fetchData();
+
     }, [id, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         const course = {
             title: title.current.value,
             description: description.current.value,
@@ -89,43 +92,42 @@ const UpdateCourse = () => {
         navigate('/');
     }
 
-    if (authUser.id === userId) {
-        return (
-            <main>
-                <div className="wrap">
-                    <h2>Update Course</h2>
 
-                    <ValidationErrors errors={errors} />
 
-                    <form onSubmit={handleSubmit}>
-                        <div className="main--flex">
-                            <div>
-                                <label htmlFor="courseTitle">Course Title</label>
-                                <input id="courseTitle" name="courseTitle" type="text" defaultValue={course.title} ref={title} />
+    return (
+        <main>
+            <div className="wrap">
+                <h2>Update Course</h2>
 
-                                <p>By {course.User.firstName} {course.User.lastName}</p>
+                <ValidationErrors errors={errors} />
 
-                                <label htmlFor="courseDescription">Course Description</label>
-                                <textarea id="courseDescription" name="courseDescription" defaultValue={course.description} ref={description}></textarea>
-                            </div>
-                            <div>
-                                <label htmlFor="estimatedTime">Estimated Time</label>
-                                <input id="estimatedTime" name="estimatedTime" type="text" defaultValue={course.estimatedTime} ref={estimatedTime} />
+                <form onSubmit={handleSubmit}>
+                    <div className="main--flex">
+                        <div>
+                            <label htmlFor="courseTitle">Course Title</label>
+                            <input id="courseTitle" name="courseTitle" type="text" defaultValue={course.title} ref={title} />
 
-                                <label htmlFor="materialsNeeded">Materials Needed</label>
-                                <textarea id="materialsNeeded" name="materialsNeeded" defaultValue={course.materialsNeeded} ref={materialsNeeded}></textarea>
-                            </div>
+                            {/* <p>By {course.User.firstName} {course.User.lastName}</p> */}
+
+                            <label htmlFor="courseDescription">Course Description</label>
+                            <textarea id="courseDescription" name="courseDescription" defaultValue={course.description} ref={description}></textarea>
                         </div>
+                        <div>
+                            <label htmlFor="estimatedTime">Estimated Time</label>
+                            <input id="estimatedTime" name="estimatedTime" type="text" defaultValue={course.estimatedTime} ref={estimatedTime} />
 
-                        <button className="button" type="submit">Update Course</button>
-                        <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
-                    </form>
-                </div>
-            </main>
-        )
-    } else {
-        return <Navigate to="/forbidden" replace />
-    }
+                            <label htmlFor="materialsNeeded">Materials Needed</label>
+                            <textarea id="materialsNeeded" name="materialsNeeded" defaultValue={course.materialsNeeded} ref={materialsNeeded}></textarea>
+                        </div>
+                    </div>
+
+                    <button className="button" type="submit">Update Course</button>
+                    <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+                </form>
+            </div>
+            {/* <Navigate to="/forbidden" replace /> */}
+        </main>
+    )
 }
 
 export default UpdateCourse;
