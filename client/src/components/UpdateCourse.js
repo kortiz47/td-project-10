@@ -15,7 +15,7 @@ const UpdateCourse = () => {
     const { authUser, userCredentials } = useContext(UserContext);
     const navigate = useNavigate();
     const [course, setCourse] = useState([]);
-    const [user, setUser] = useState([]);
+    const [userId, setUserId] = useState([]);
     const [errors, setErrors] = useState([]);
     const { id } = useParams();
     const title = useRef();
@@ -28,9 +28,9 @@ const UpdateCourse = () => {
             try {
                 const response = await api(`/courses/${id}`, "GET", null, null)
                 if (response.status === 200) {
-                    const courses = await response.json();
-                    setCourse(courses);
-                    setUser(courses.User);
+                    const data = await response.json();
+                    setCourse(data);
+                    setUserId(data.User.id);
                 } else if (response.status === 404) {
                     console.log('Course was not found');
                     navigate('/notfound')
@@ -49,7 +49,7 @@ const UpdateCourse = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
         const course = {
             title: title.current.value,
             description: description.current.value,
@@ -75,7 +75,7 @@ const UpdateCourse = () => {
                     errs.push('Please provide a Description')
                 }
                 setErrors(errs);
-            } else if (response.status === 403){
+            } else if (response.status === 403) {
                 console.log('You are not the owner of this course, so you are unable to update it');
                 navigate('/forbidden');
             }
@@ -89,42 +89,42 @@ const UpdateCourse = () => {
         navigate('/');
     }
 
-    if(authUser.id === user.id){ 
-    return (
-        <main>
-            <div className="wrap">
-                <h2>Update Course</h2>
+    if (authUser.id === userId) {
+        return (
+            <main>
+                <div className="wrap">
+                    <h2>Update Course</h2>
 
-                <ValidationErrors errors={errors}/>
+                    <ValidationErrors errors={errors} />
 
-                <form onSubmit={handleSubmit}>
-                    <div className="main--flex">
-                        <div>
-                            <label htmlFor="courseTitle">Course Title</label>
-                            <input id="courseTitle" name="courseTitle" type="text" defaultValue={course.title} ref={title} />
+                    <form onSubmit={handleSubmit}>
+                        <div className="main--flex">
+                            <div>
+                                <label htmlFor="courseTitle">Course Title</label>
+                                <input id="courseTitle" name="courseTitle" type="text" defaultValue={course.title} ref={title} />
 
-                            <p>By {user.firstName} {user.lastName}</p>
+                                <p>By {course.User.firstName} {course.User.lastName}</p>
 
-                            <label htmlFor="courseDescription">Course Description</label>
-                            <textarea id="courseDescription" name="courseDescription" defaultValue={course.description} ref={description}></textarea>
+                                <label htmlFor="courseDescription">Course Description</label>
+                                <textarea id="courseDescription" name="courseDescription" defaultValue={course.description} ref={description}></textarea>
+                            </div>
+                            <div>
+                                <label htmlFor="estimatedTime">Estimated Time</label>
+                                <input id="estimatedTime" name="estimatedTime" type="text" defaultValue={course.estimatedTime} ref={estimatedTime} />
+
+                                <label htmlFor="materialsNeeded">Materials Needed</label>
+                                <textarea id="materialsNeeded" name="materialsNeeded" defaultValue={course.materialsNeeded} ref={materialsNeeded}></textarea>
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="estimatedTime">Estimated Time</label>
-                            <input id="estimatedTime" name="estimatedTime" type="text" defaultValue={course.estimatedTime} ref={estimatedTime} />
 
-                            <label htmlFor="materialsNeeded">Materials Needed</label>
-                            <textarea id="materialsNeeded" name="materialsNeeded" defaultValue={course.materialsNeeded} ref={materialsNeeded}></textarea>
-                        </div>
-                    </div>
-
-                    <button className="button" type="submit">Update Course</button>
-                    <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
-                </form>
-            </div>
-        </main>
-    )
-    } else{
-        return <Navigate to="/forbidden" replace/>
+                        <button className="button" type="submit">Update Course</button>
+                        <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+                    </form>
+                </div>
+            </main>
+        )
+    } else {
+        return <Navigate to="/forbidden" replace />
     }
 }
 
