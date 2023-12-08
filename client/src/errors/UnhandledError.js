@@ -1,3 +1,8 @@
+/**
+ * 
+ * @returns Renders a user-message that an error occurred on the server
+ */
+
 const UnhandledError = () => {
     return (
         <main>

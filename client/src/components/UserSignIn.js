@@ -3,6 +3,13 @@ import { useRef, useState, useContext } from "react";
 import UserContext from "../context/UserContext";
 import ValidationErrors from "../errors/ValidationErrors";
 
+/**
+ * The UserSignIn component requires a user to use existing credentials to log into the app
+ * once a user is signed in, they are redirected to the previous page they were on
+ * 
+ * @returns Renders the sign in page and authenticates a user if credentials match database records
+ */
+
 const UserSignIn = () => {
     const { actions } = useContext(UserContext);
     const [errors, setErrors] = useState([]);
@@ -17,7 +24,7 @@ const UserSignIn = () => {
         e.preventDefault();
         let from = '/';
 
-        if(location.state){
+        if (location.state) {
             from = location.state.from
         }
 
@@ -30,10 +37,9 @@ const UserSignIn = () => {
         try {
             const user = await actions.signIn(credentials);
             if (user) {
-            navigate(from);
-            //navigate('/')
+                navigate(from);
             } else {
-                setErrors(['Sign-in was unsuccessful', 'Check your Email and Password'])
+                setErrors(['Sign-in was unsuccessful'])
             }
         } catch (error) {
             console.log(error);

@@ -1,3 +1,8 @@
+/**
+ * 
+ * @returns Renders user-error message that a page cannot be found if it is not defined
+ */
+
 const NotFound = () =>{
     return(
         <main>

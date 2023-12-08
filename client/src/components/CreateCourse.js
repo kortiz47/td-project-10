@@ -4,6 +4,14 @@ import UserContext from "../context/UserContext";
 import ValidationErrors from "../errors/ValidationErrors";
 import { api } from "../utils/apiHelper";
 
+/**
+ * The Create Course component is only able to display if a user is authenticated.
+ * Once a user is logged in, they are able to create a course for the application
+ * through a POST request to the API
+ * 
+ * @returns Renders the New Course Page where an authenticated user can create a course
+ */
+
 const CreateCourse = () => {
     const { authUser, userCredentials } = useContext(UserContext);
     const navigate = useNavigate();
@@ -56,7 +64,6 @@ const CreateCourse = () => {
         navigate('/');
     }
 
-    //if (authUser) {
         return (
             <main>
                 <div className="wrap">
@@ -89,7 +96,6 @@ const CreateCourse = () => {
                 </div>
             </main>
         );
-   // }
 }
 
 export default CreateCourse;

@@ -4,6 +4,20 @@ import ReactMarkdown from 'react-markdown'
 import { api } from "../utils/apiHelper";
 import UserContext from "../context/UserContext";
 
+/**
+ * CourseDetails Component retrieves data from our REST API, sets the data returned 
+ * to our Course State, and uses user credentials and authorization
+ * via the useContext hook to dynamically display course details, our Update and 
+ * Delete buttons for each individual course.
+ * 
+ * Additionally, it handles errors based on status returned by our REST API
+ * 
+ * @returns Course Detail Pages for /courses/:id
+ */
+
+
+
+
 const CourseDetail = () => {
     const [course, setCourse] = useState(null);
     const [user, setUser] = useState(null);

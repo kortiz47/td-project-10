@@ -1,6 +1,11 @@
+/**
+ * 
+ * @param {Array} param0 errors
+ * @returns Validation errors to be displayed when a user creates, updates, or deletes a course or user account
+ */
+
 const ValidationErrors = ({ errors }) => {
     let errorDisplay = null;
-    console.log(errors);
     if (errors) {
         if (errors.length) {
             errorDisplay = (

@@ -1,3 +1,7 @@
+/**
+ * This component renders each Course for Courses
+ */
+
 import { Link } from 'react-router-dom';
 
 const Course = ({ course }) => {

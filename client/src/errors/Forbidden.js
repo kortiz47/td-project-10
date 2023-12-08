@@ -1,3 +1,7 @@
+/**
+ * 
+ * @returns Renders user-error message that a page is not accessible by the current authenticated User
+ */
 const Forbidden = () =>{
     return(
         <main>

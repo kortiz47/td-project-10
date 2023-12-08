@@ -1,3 +1,13 @@
+/**
+ * 
+ * @param {string} path 
+ * @param {string} method 
+ * @param {object} body 
+ * @param {object} credentials 
+ * @returns our apiHelper reduces code redundancy and allows a user to make CRUD requests through 
+ * the application
+ */
+
 export const api = (path, method = "GET", body = null, credentials = null) => {
     
     const url = `http://localhost:5000/api${path}`;

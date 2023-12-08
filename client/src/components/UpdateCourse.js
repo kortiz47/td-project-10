@@ -4,6 +4,12 @@ import UserContext from "../context/UserContext";
 import { api } from "../utils/apiHelper";
 import ValidationErrors from "../errors/ValidationErrors";
 
+/**
+ * The UpdateCourse component is only accessible if a user is authenticated and is the owner of a course
+ * It allows a user to update a course they made and handles any validation errors for updating a course
+ * 
+ * @returns Renders the Update Course page /courses/:id/update and sends PUT request to REST API
+ */
 
 const UpdateCourse = () => {
     const { authUser, userCredentials } = useContext(UserContext);

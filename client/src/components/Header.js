@@ -2,8 +2,12 @@ import { Link } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import { useContext } from "react";
 
-//TODO - when we refresh the auth user is stored in an object in array which then makes auth user 
-//authUser[0] but for just regular logging in it is just authUser
+/**
+ * A dynamic Header that displays Sign In and Sign Out when user is not 
+ * authenticated and their Name and Sign Out when user is authenticated
+ * 
+ * @returns The Header Component dynamically displays the header based on whether a user is logged in or not
+ */
 const Header = () => {
     const { authUser } = useContext(UserContext);
     return (

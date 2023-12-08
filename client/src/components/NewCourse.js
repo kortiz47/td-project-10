@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 
+/**
+ * @returns New Course button on Home Page (Courses)
+ */
 const NewCourse = () => {
     return (
         <Link className="course--module course--add--module" to="/courses/create">

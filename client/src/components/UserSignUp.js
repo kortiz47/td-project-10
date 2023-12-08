@@ -4,6 +4,13 @@ import ValidationErrors from '../errors/ValidationErrors';
 import { api } from '../utils/apiHelper';
 import UserContext from '../context/UserContext';
 
+/**
+ * Renders the Sign Up form and once a user is able to sign up they are automatically 
+ * signed in and automatically taken to the home page
+ * 
+ * @returns Renders the Sign Up form, creates a new user, and logs them in
+ */
+
 const UserSignUp = () => {
     const { actions } = useContext(UserContext);
     const [errors, setErrors] = useState([]);

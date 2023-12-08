@@ -2,6 +2,11 @@ import { createContext, useState } from "react";
 import { api } from "../utils/apiHelper";
 import Cookies from 'js-cookie';
 
+/**
+ * The UserContext component holds our authUser state, userCredentials state, and signIn and signOut functions
+ * to be made globally available to other parts of our application through the 
+ * useContext React Hook
+ */
 
 const UserContext = createContext(null);
 

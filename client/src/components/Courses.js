@@ -4,6 +4,13 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../utils/apiHelper";
 
+/**
+ * The Course Component renders the UI for our Home Page that displays the list of courses
+ * 
+ * @returns Home Page Display for /
+ */
+
+
 const Courses = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
