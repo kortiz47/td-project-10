@@ -1,8 +1,7 @@
 import Course from "./Course";
 import NewCourse from "./NewCourse";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { api } from "../utils/apiHelper";
+import { useEffect, useContext } from "react";
+import FetchDataContext from "../context/FetchDataContext";
 
 /**
  * The Course Component renders the UI for our Home Page that displays the list of courses
@@ -12,31 +11,14 @@ import { api } from "../utils/apiHelper";
 
 
 const Courses = () => {
-    const navigate = useNavigate();
-    const [data, setData] = useState([]);
-
+    const { data, actions } = useContext(FetchDataContext);
+    console.log(data)
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await api('/courses', "GET", null, null)
-                if (response) {
-                    if (response.status === 200) {
-                        const courses = await response.json();
-                        setData(courses);
-                    }
-                }
-                else {
-                    throw new Error();
-                }
-            } catch (error) {
-                console.log(error);
-                navigate('/error', { replace: true });
-            }
+        const fetch = async() =>{
+            await actions.fetchData('/courses');
         }
-
-        fetchData();
-    }, [navigate]);
-
+        fetch();
+    }, []);
 
     return (
         <main>

@@ -1,6 +1,7 @@
 import { useNavigate, useParams, Navigate } from "react-router-dom";
 import { useState, useEffect, useRef, useContext } from "react";
 import UserContext from "../context/UserContext";
+//import FetchDataContext from "../context/FetchDataContext";
 import { api } from "../utils/apiHelper";
 import ValidationErrors from "../errors/ValidationErrors";
 
@@ -13,6 +14,7 @@ import ValidationErrors from "../errors/ValidationErrors";
 
 const UpdateCourse = () => {
     const { authUser, userCredentials } = useContext(UserContext);
+
     const navigate = useNavigate();
     const [course, setCourse] = useState([]);
     //const [user, setUser] = useState([]);

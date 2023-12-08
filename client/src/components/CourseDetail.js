@@ -1,8 +1,9 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ReactMarkdown from 'react-markdown'
 import { api } from "../utils/apiHelper";
 import UserContext from "../context/UserContext";
+import FetchDataContext from "../context/FetchDataContext";
 
 /**
  * CourseDetails Component retrieves data from our REST API, sets the data returned 
@@ -17,39 +18,19 @@ import UserContext from "../context/UserContext";
 
 
 
-
 const CourseDetail = () => {
-    const [course, setCourse] = useState(null);
-    const [user, setUser] = useState(null);
+    const { actions, data, user } = useContext(FetchDataContext);
     const { authUser, userCredentials } = useContext(UserContext);
     const { id } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await api(`/courses/${id}`, "GET", null, null);
-                if (response.status === 200) {
-                    const course = await response.json();
-                    setCourse(course);
-                    setUser(course.User);
-                } else if (response.status === 404) {
-                    navigate('/notfound');
-                } else {
-                    throw new Error();
-                }
-            } catch (error) {
-                console.log(error);
-                navigate('/error', { replace: true });
-            }
-        }
-
-        fetchData();
-    }, [id, navigate]);
+        actions.fetchData(`/courses/${id}`);
+    }, [actions, id]);
 
     const handleDelete = async (e) => {
         e.preventDefault();
-        const response = await api(`/courses/${id}`, "DELETE", course, userCredentials);
+        const response = await api(`/courses/${id}`, "DELETE", data, userCredentials);
 
         if (response.status === 204) {
             console.log('Course has been deleted!');
@@ -63,7 +44,7 @@ const CourseDetail = () => {
         }
     }
 
-    if (course) {
+    if (data) {
         return (
             <main>
                 <div className="actions--bar">
@@ -72,7 +53,7 @@ const CourseDetail = () => {
                             <>
                                 {authUser.id === user.id ?
                                     <>
-                                        <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
+                                        <Link className="button" to={`/courses/${data.id}/update`}>Update Course</Link>
                                         <Link className="button" onClick={handleDelete}>Delete Course</Link>
                                     </>
                                     :
@@ -92,20 +73,19 @@ const CourseDetail = () => {
                         <div className="main--flex">
                             <div>
                                 <h3 className="course--detail--title">Course</h3>
-                                <h4 className="course--name">{course.title}</h4>
-                                {/* TODO: get the firstName and lastName of the user into the created by section */}
+                                <h4 className="course--name">{data.title}</h4>
 
                                 <p>By {user.firstName} {user.lastName}</p>
 
-                                <ReactMarkdown>{course.description}</ReactMarkdown>
+                                <ReactMarkdown>{data.description}</ReactMarkdown>
                             </div>
                             <div>
                                 <h3 className="course--detail--title">Estimated Time</h3>
-                                <p>{course.estimatedTime ? course.estimatedTime : 'No Current Estimate'}</p>
+                                <p>{data.estimatedTime ? data.estimatedTime : 'No Current Estimate'}</p>
 
                                 <h3 className="course--detail--title">Materials Needed</h3>
                                 <ReactMarkdown className="course--detail--list">
-                                    {course.materialsNeeded}
+                                    {data.materialsNeeded}
                                 </ReactMarkdown>
                             </div>
                         </div>
