@@ -28,7 +28,6 @@ const UserSignIn = () => {
             from = location.state.from
         }
 
-
         const credentials = {
             username: userEmail.current.value,
             password: userPassword.current.value
@@ -36,10 +35,22 @@ const UserSignIn = () => {
 
         try {
             const user = await actions.signIn(credentials);
-            if (user) {
-                navigate(from);
+            console.log(user)
+
+            if (user.message === 'Access Denied') {
+                const errs = [];
+                if (!userEmail.current.value) {
+                    errs.push("Please provide a value for 'email'")
+                }
+                if (!userPassword.current.value) {
+                    errs.push("Please provide a value for 'password'")
+                }
+                if (userEmail.current.value && userPassword.current.value) {
+                    errs.push('Sign in was unsuccessful')
+                }
+                setErrors(errs);
             } else {
-                setErrors(['Sign-in was unsuccessful'])
+                navigate(from);
             }
         } catch (error) {
             console.log(error);
@@ -62,10 +73,10 @@ const UserSignIn = () => {
                 <form onSubmit={handleSubmit}>
 
                     <label htmlFor="emailAddress">Email Address</label>
-                    <input id="emailAddress" name="emailAddress" type="email" required ref={userEmail} />
+                    <input id="emailAddress" name="emailAddress" type="email" ref={userEmail} />
 
                     <label htmlFor="password">Password</label>
-                    <input id="password" name="password" type="password" required ref={userPassword} />
+                    <input id="password" name="password" type="password" ref={userPassword} />
 
                     <button className="button" type="submit">Sign In</button>
                     <button className="button button-secondary" onClick={handleCancel}>Cancel</button>

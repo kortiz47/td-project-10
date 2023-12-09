@@ -34,7 +34,7 @@ export const UserProvider = (props) => {
             return user;
         } else if (response.status === 401) {
             console.log('Check that you entered your username and password correctly!');
-            return null;
+            return response.json();
         }
     }
 
