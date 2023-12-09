@@ -47,7 +47,6 @@ const UserSignUp = () => {
             } else if (response.status === 400) {
                 const valErrors = [];
                 let data = await response.json();
-                console.log(data);
                 if (data[0]) {
                     valErrors.push (data[0]);
                     console.log(valErrors);

@@ -35,8 +35,6 @@ const UserSignIn = () => {
 
         try {
             const user = await actions.signIn(credentials);
-            console.log(user)
-
             if (user.message === 'Access Denied') {
                 const errs = [];
                 if (!userEmail.current.value) {

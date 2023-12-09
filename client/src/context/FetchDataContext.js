@@ -21,6 +21,8 @@ export const FetchDataProvider = (props) => {
                 } else if (response.status === 404) {
                     console.log('Course was not found');
                     navigate('/notfound')
+                } else if (response.status === 500){
+                    navigate('/error', { replace: true });
                 }
             }
             else {
