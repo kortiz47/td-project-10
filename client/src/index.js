@@ -4,9 +4,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
 import { FetchDataProvider } from './context/FetchDataContext';
 
-//CONTEXT
-//TODO: import contexts to grab api data
-
 //APP
 import App from './App';
 

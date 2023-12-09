@@ -19,14 +19,14 @@ import FetchDataContext from "../context/FetchDataContext";
 
 
 const CourseDetail = () => {
-    const { actions, data, user } = useContext(FetchDataContext);
+    const { actions, data } = useContext(FetchDataContext);
     const { authUser, userCredentials } = useContext(UserContext);
     const { id } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
         actions.fetchData(`/courses/${id}`);
-    }, [actions, id]);
+    }, [data]);
 
     const handleDelete = async (e) => {
         e.preventDefault();
@@ -44,14 +44,14 @@ const CourseDetail = () => {
         }
     }
 
-    if (data) {
+    if (data && data.User) {
         return (
             <main>
                 <div className="actions--bar">
                     <div className="wrap">
                         {authUser ?
                             <>
-                                {authUser.id === user.id ?
+                                {authUser && authUser.id === data.userId ? 
                                     <>
                                         <Link className="button" to={`/courses/${data.id}/update`}>Update Course</Link>
                                         <Link className="button" onClick={handleDelete}>Delete Course</Link>
@@ -75,7 +75,7 @@ const CourseDetail = () => {
                                 <h3 className="course--detail--title">Course</h3>
                                 <h4 className="course--name">{data.title}</h4>
 
-                                <p>By {user.firstName} {user.lastName}</p>
+                                <p>By {data.User.firstName} {data.User.lastName}</p>
 
                                 <ReactMarkdown>{data.description}</ReactMarkdown>
                             </div>

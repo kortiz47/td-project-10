@@ -12,18 +12,18 @@ import FetchDataContext from "../context/FetchDataContext";
 
 const Courses = () => {
     const { data, actions } = useContext(FetchDataContext);
-    console.log(data)
     useEffect(() => {
-        const fetch = async() =>{
-            await actions.fetchData('/courses');
-        }
         fetch();
     }, []);
+
+    const fetch = async () => {
+        await actions.fetchData('/courses');
+    }
 
     return (
         <main>
             <div className="wrap main--grid">
-                {data.map(course => <Course course={course} key={course.id} />)}
+                {Array.isArray(data) && data.map(course => <Course course={course} key={course.id} />)}
                 <NewCourse />
             </div>
         </main>
@@ -31,3 +31,4 @@ const Courses = () => {
 }
 
 export default Courses;
+

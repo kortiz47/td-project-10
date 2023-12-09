@@ -7,7 +7,6 @@ const FetchDataContext = createContext();
 export const FetchDataProvider = (props) => {
     const [isFetched, setIsFetched] = useState(false);
     const [data, setData] = useState([]);
-    const [user, setUser] = useState([]);
 
     const navigate = useNavigate();
 
@@ -19,7 +18,6 @@ export const FetchDataProvider = (props) => {
                 if (response.status === 200) {
                     const data = await response.json();
                     setData(data);
-                    setUser(data.User);
                 } else if (response.status === 404) {
                     console.log('Course was not found');
                     navigate('/notfound')
@@ -40,7 +38,6 @@ export const FetchDataProvider = (props) => {
         <FetchDataContext.Provider value={{
             isFetched,
             data,
-            user,
             actions: {
                 fetchData
             }
