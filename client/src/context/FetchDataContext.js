@@ -5,7 +5,6 @@ import { api } from "../utils/apiHelper";
 const FetchDataContext = createContext();
 
 export const FetchDataProvider = (props) => {
-    const [isFetched, setIsFetched] = useState(false);
     const [data, setData] = useState([]);
 
     const navigate = useNavigate();
@@ -14,7 +13,6 @@ export const FetchDataProvider = (props) => {
         try {
             const response = await api(path, "GET", null, null)
             if (response) {
-                setIsFetched(true);
                 if (response.status === 200) {
                     const data = await response.json();
                     setData(data);
@@ -26,11 +24,9 @@ export const FetchDataProvider = (props) => {
                 }
             }
             else {
-                setIsFetched(false);
                 throw new Error();
             }
         } catch (error) {
-            setIsFetched(false);
             console.log(error);
             navigate('/error', { replace: true });
         }
@@ -38,7 +34,6 @@ export const FetchDataProvider = (props) => {
 
     return (
         <FetchDataContext.Provider value={{
-            isFetched,
             data,
             actions: {
                 fetchData
