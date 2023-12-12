@@ -26,7 +26,7 @@ const CourseDetail = () => {
 
     useEffect(() => {
         actions.fetchData(`/courses/${id}`);
-    }, [id, data]);
+    }, [id]);
 
     const handleDelete = async (e) => {
         e.preventDefault();

@@ -27,7 +27,7 @@ const UpdateCourse = () => {
 
     useEffect(() => {
         actions.fetchData(`/courses/${id}`);
-    }, [data]);
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

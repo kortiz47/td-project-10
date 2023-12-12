@@ -14,7 +14,7 @@ const Courses = () => {
     const { data, actions } = useContext(FetchDataContext);
     useEffect(() => {
         fetch();
-    }, [data]);
+    }, []);
 
     const fetch = async () => {
         await actions.fetchData('/courses');
