@@ -9,8 +9,8 @@
  */
 
 export const api = (path, method = "GET", body = null, credentials = null) => {
-    
-    const url = `http://localhost:5000/api${path}`;
+    //http://localhost:5000/api
+    const url = `https://td-project-10-production.up.railway.app/api${path}`;
 
     const options = {
         method,
