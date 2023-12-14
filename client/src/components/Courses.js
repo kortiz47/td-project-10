@@ -14,7 +14,9 @@ const Courses = () => {
     const { data, actions } = useContext(FetchDataContext);
     useEffect(() => {
         fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    //warning on line 17: React Hook useEffect has a missing dependency: 'fetch'. Either include it or remove the dependency array.
 
     const fetch = async () => {
         await actions.fetchData('/courses');

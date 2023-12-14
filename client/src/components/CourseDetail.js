@@ -26,7 +26,9 @@ const CourseDetail = () => {
 
     useEffect(() => {
         actions.fetchData(`/courses/${id}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
+    //warning on prev line: React Hook useEffect has a missing dependency: 'actions'. Either include it or remove the dependency array.
 
     const handleDelete = async (e) => {
         e.preventDefault();

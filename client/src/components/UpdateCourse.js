@@ -27,7 +27,9 @@ const UpdateCourse = () => {
 
     useEffect(() => {
         actions.fetchData(`/courses/${id}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    //warning for prev line: React Hook useEffect has missing dependencies: 'actions' and 'id'. Either include them or remove the dependency array.
 
     const handleSubmit = async (e) => {
         e.preventDefault();
